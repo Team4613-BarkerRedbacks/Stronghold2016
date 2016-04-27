@@ -239,6 +239,29 @@ public class Autonomous
 				new ActionWait(1D),
 				new ActionSeq.Parallel(launcherShoot)
 		);
+		
+		//TEST
+		//Position 1	Low bar, 1 goal from LHS Corner (fast)
+		autonomous[12] = createAuto(BASE,
+				new ActionResetYaw(),
+				new ActionSeq.Parallel(intake, new ActionDoNothing()),
+				new ActionSetCANEncoder(sensors.turretPanEncoder, 0),
+				//new ActionSeq.Parallel(turretCenterFromLeftAuto),
+				new ActionWait(2.5D),
+				new ActionSeq.Parallel(intakeIntakeBall),
+				new ActionDriveStraight(new CheckCANEncoder(5000, sensors.driveLEncoder), -0.8D),
+				new ActionSeq.Parallel(new ActionTurretTiltToPos(RobotMap.turretIntakePos)),
+				new ActionSeq.Parallel(sequenceIntakeToShooter),
+				new ActionWait(3D),
+				new ActionSeq.Parallel(turretToShootCornerAuto3),
+				new ActionSeq.Parallel(launcherHold),
+				new ActionSeq.Parallel(new ActionMotor.RampTime(launcher.shooter, 1D, 0.5D, true)),
+				new ActionDriveStraight(new CheckCANEncoder(2850, sensors.driveLEncoder), -0.6D),
+				new ActionDoNothing(new CheckCANEncoderNoReset(RobotMap.turretCornerH - 1000, sensors.turretTiltEncoder)),
+				new ActionWait(1D),
+				new ActionDriveStraight(new CheckTime(1D), -0.5D),// Was 0.5, -0.4
+				new ActionSeq.Parallel(launcherShoot)
+		);
 	}
 	
 	public static CommandRB createAuto(ArmPosition armPos, Action... actions) {
