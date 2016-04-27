@@ -233,11 +233,11 @@ public class CommandList
 				new ActionTurretCenter(),
 				new ActionTurretMoveToPos(0)
 		),
+		//CHECKME
 		turretToIntake = newCom(
-				new ActionTurretTiltReset(),
+				new ActionTurretTiltToPos(RobotMap.turretIntakePos),
 				new ActionTurretCenter(),
-				new ActionTurretMoveToPos(0), 
-				new ActionTurretTiltToPos(RobotMap.turretIntakePos)
+				new ActionTurretMoveToPos(0)
 		),
 		
 		turretToShootCorner = goToShootPos(RobotMap.turretCornerH, RobotMap.turretCornerR, NOT_BASE),
