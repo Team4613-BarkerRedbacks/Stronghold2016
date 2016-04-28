@@ -43,10 +43,6 @@ public class OI
 		//whenPressed(d_B, sequenceShootFromStop.c());
 		whenPressed(d_B, shootWithCorrection.c());
 		whenReleased(d_B, launcherSlow.c(), turretToCD.c());
-		
-		whenPressed(d_LT, shootWithCorrection.c());
-		whenReleased(d_LT, launcherSlow.c(), turretToCD.c());
-		
 		whenHeld(d_A, launcherShootSlow.c());
 
 		whenPressed(d_LB, sequenceLowConfig.c());
