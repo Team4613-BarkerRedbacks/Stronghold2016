@@ -81,9 +81,7 @@ public class OI
 		whenHeld(o_TurretLeft, turretLManual.c());
 		whenHeld(o_TurretRight, turretRManual.c());
 
-		whenHeld(o_IntakeToShooter, sequenceIntakeToShooterHeld.c());
-		whenReleased(o_IntakeToShooter, sequenceStopBallHandling.c());
-		
+		whenPressed(o_IntakeToShooter, sequenceIntakeToShooter.c());
 		whenPressed(o_IntakeFromGround, sequenceIntakeGround.c());
 
 		whenHeld(o_IntakeDirection, intakeSpitBall.c());

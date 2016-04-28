@@ -282,19 +282,6 @@ public class CommandList
 				new ActionSeq.Parallel(launcher, new ActionWait(0.5D)),
 				new ActionSeq.Parallel(intake, new ActionWait(0.5D))
 		),
-		sequenceIntakeToShooterHeld = newCom(
-				new ActionSeq.Parallel(intake, new ActionWait(0.5D)),
-				new ActionSeq.Parallel(armToIntake),
-				new ActionSeq.Parallel(launcherIntakeFast),
-				new ActionWait(1D),
-				new ActionSeq.Parallel(intakeIntakeBallFast),
-				new ActionDoNothing()
-		),
-		sequenceStopBallHandling = newCom(
-				new ActionSeq.Parallel(turret, new ActionWait(0.5D)),
-				new ActionSeq.Parallel(launcher, new ActionWait(0.5D)),
-				new ActionSeq.Parallel(intake, new ActionWait(0.5D))
-		),
 		sequenceShootFromStop = newCom(
 				new ActionSeq.Parallel(launcherSpeedWheels),
 				new ActionWait(1.5D),
