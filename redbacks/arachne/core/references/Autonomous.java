@@ -112,7 +112,7 @@ public class Autonomous
 				new ActionSeq.Parallel(launcherHold),
 				new ActionSeq.Parallel(new ActionMotor.RampTime(launcher.shooter, 1D, 0.5D, true)),
 				new ActionDriveStraight(new CheckCANEncoder(2850, sensors.driveLEncoder), -0.6D),
-				new ActionDoNothing(new CheckCANEncoderNoReset(51000, sensors.turretTiltEncoder)),
+				new ActionDoNothing(new CheckCANEncoderNoReset(47000, sensors.turretTiltEncoder)),
 				new ActionWait(1D),
 				new ActionDriveStraight(new CheckTime(1D), -0.5D),// Was 0.5, -0.4
 				new ActionSeq.Parallel(launcherShoot)

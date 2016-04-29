@@ -252,7 +252,7 @@ public class CommandList
 		turretToShootD4 = goToShootPos(RobotMap.turretD4H, RobotMap.turretD4R, NOT_CENTRE),
 		turretToShootD5 = goToShootPos(RobotMap.turretD5H, RobotMap.turretD5R, NOT_CENTRE),
 		
-		turretToShootCornerAuto3 = goToShootPos(52500, -5975, NOT_BASE),//TEST
+		turretToShootCornerAuto3 = goToShootPos(48000, -5975, NOT_BASE),//TEST
 		turretToShootEdgeAuto10 = goToShootPos(RobotMap.turretEdgeH - 1000, RobotMap.turretEdgeR - 50, NOT_BASE);
 	
 	//Sequences
