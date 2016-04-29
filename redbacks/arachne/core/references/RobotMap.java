@@ -70,7 +70,7 @@ public class RobotMap {
 		turretFrontH = 67000,
 		
 		turretSPH = 80000,//71000,//69000,
-		turretSPR = 6625,//6425//Done
+		turretSPR = 6300,//6625,//6425//Done
 		
 		turretLBH = 45500,
 		turretLBR = 2490,//Done
