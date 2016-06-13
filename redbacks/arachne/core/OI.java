@@ -100,6 +100,8 @@ public class OI
 	//Set up joysticks and buttons here.
 	private static final Joystick stick_d = new Joystick(0);
 	private static final Joystick stick_o = new Joystick(1);
+	private static final Joystick stick_l = new Joystick(2);
+	private static final Joystick stick_r = new Joystick(3);
 	
 	public static final JoystickAxis
 		axis_d_LX = new JoystickAxis(stick_d, 0),
@@ -107,7 +109,10 @@ public class OI
 		axis_d_LT = new JoystickAxis(stick_d, 2),
 		axis_d_RT = new JoystickAxis(stick_d, 3),
 		axis_d_RX = new JoystickAxis(stick_d, 4),
-		axis_d_RY = new JoystickAxis(stick_d, 5);
+		axis_d_RY = new JoystickAxis(stick_d, 5),
+		
+		axis_l_Y = new JoystickAxis(stick_l, 1),
+		axis_r_Y = new JoystickAxis(stick_r, 1);
 	
 	public static final Button
 		d_A = new JoystickButton(stick_d, 1),
