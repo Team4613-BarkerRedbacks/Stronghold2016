@@ -4,7 +4,7 @@ import static redbacks.arachne.core.CommandBase.turret;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import redbacks.arachne.lib.commands.CommandRB;
 
-public class ActionTurretCameraMove extends ActionTurretMoveToPos
+public class ActionTurretCameraMove extends ActionTurretMoveDis
 {
 	NetworkTable table;
 	
