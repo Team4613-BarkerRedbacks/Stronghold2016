@@ -39,6 +39,8 @@ public class ActionReadSensors extends Action
 		putNumber("Pitch", getPitch());
 		putNumber("Roll", getRoll());
 		putNumber("Yaw", getYaw());
+		
+		putNumber("Potentiometer", sensors.turretPot.get());
 
 		putNumber("Encoder L", sensors.driveLEncoder.get());
 		putNumber("Encoder R", sensors.driveREncoder.get());
