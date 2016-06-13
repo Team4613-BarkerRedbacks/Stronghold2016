@@ -9,6 +9,7 @@ import redbacks.arachne.lib.actions.Action;
 import redbacks.arachne.lib.actions.ActionDoNothing;
 import redbacks.arachne.lib.actions.ActionMotor;
 import redbacks.arachne.lib.actions.ActionMulti;
+import redbacks.arachne.lib.actions.ActionResetCANEncoder;
 import redbacks.arachne.lib.actions.ActionSeq;
 import redbacks.arachne.lib.actions.ActionSetCANEncoder;
 import redbacks.arachne.lib.actions.ActionWait;
@@ -26,6 +27,7 @@ import redbacks.robot.arm.ArmPosition;
 import redbacks.robot.drive.ActionDriveStraight;
 import redbacks.robot.drive.ActionShift;
 import redbacks.robot.drive.ActionTankDrive;
+import redbacks.robot.launcher.vision.ActionTrackSetup;
 import redbacks.robot.turret.ActionSetZeroed;
 import redbacks.robot.turret.ActionTurretMoveToPos;
 import redbacks.robot.turret.ActionTurretTiltReset;
@@ -264,6 +266,125 @@ public class Autonomous
 				new ActionSeq.Parallel(launcherHold),
 				new ActionSeq.Parallel(new ActionMotor.RampTime(launcher.shooter, 1D, 0.5D, true))
 		);
+		
+		//Pos 3/4 RT
+		autonomous[13] = createAuto(TOP,
+				new ActionResetYaw(),
+				new ActionResetCANEncoder(sensors.driveLEncoder),
+				new ActionResetCANEncoder(sensors.driveREncoder),
+				new ActionSeq.Parallel(launcherHold),
+				new ActionMulti(
+						new ActionMotor.RampTime(driver.left, 1, 1, true),
+						new ActionMotor.RampTime(driver.right, 1, 1, true)
+				),
+				new ActionDriveStraight(new CheckCANEncoderNoReset(5500, sensors.driveLEncoder), 1D),
+				new ActionTankDrive(new CheckTime(0.2D), -0.2D, -0.2D),
+				new ActionSeq.Parallel(launcherIntakeManual),
+				new ActionTrackSetup(65, -60, 12.5D, -150D),
+				new ActionWait(0.5D),
+				new ActionSeq.Parallel(launcherSpeedWheels),
+				new ActionWait(1.5D),
+				new ActionSeq.Parallel(shootWithCorrection)
+		);
+		
+		//Pos 3/4 RW
+		autonomous[14] = createAuto(TOP,
+				new ActionResetYaw(),
+				new ActionResetCANEncoder(sensors.driveLEncoder),
+				new ActionResetCANEncoder(sensors.driveREncoder),
+				new ActionSeq.Parallel(launcherHold),
+				new ActionMulti(
+						new ActionMotor.RampTime(driver.left, 1, 1, true),
+						new ActionMotor.RampTime(driver.right, 1, 1, true)
+				),
+				new ActionDriveStraight(new CheckCANEncoderNoReset(6000, sensors.driveLEncoder), 1D),
+				new ActionResetCANEncoder(sensors.driveLEncoder),
+				new ActionResetCANEncoder(sensors.driveREncoder),
+				new ActionMulti(
+						new ActionMotor.RampTime(driver.left, 0, 0.3D, true),
+						new ActionMotor.RampTime(driver.right, 0, 0.3D, true)
+				),
+				new ActionDriveStraight(new CheckCANEncoderNoReset(200, sensors.driveLEncoder, false), -0.5D),
+				new ActionSeq.Parallel(launcherIntakeManual),
+				new ActionTrackSetup(65, -60, 12.5D, -150D),
+				new ActionWait(0.5D),
+				new ActionSeq.Parallel(launcherSpeedWheels),
+				new ActionWait(1.5D),
+				new ActionSeq.Parallel(shootWithCorrection)
+		);
+		
+		//Pos 5 Cat D
+		autonomous[15] = createAuto(TOP,
+				new ActionResetYaw(),
+				new ActionResetCANEncoder(sensors.driveLEncoder),
+				new ActionResetCANEncoder(sensors.driveREncoder),
+				new ActionSeq.Parallel(launcherHold),
+				new ActionMulti(
+						new ActionMotor.RampTime(driver.left, 1, 1, true),
+						new ActionMotor.RampTime(driver.right, 1, 1, true)
+				),
+				new ActionDriveStraight(new CheckCANEncoderNoReset(6000, sensors.driveLEncoder), 1D),
+				new ActionResetCANEncoder(sensors.driveLEncoder),
+				new ActionResetCANEncoder(sensors.driveREncoder),
+				new ActionMulti(
+						new ActionMotor.RampTime(driver.left, 0, 0.3D, true),
+						new ActionMotor.RampTime(driver.right, 0, 0.3D, true)
+				),
+				new ActionDriveStraight(new CheckCANEncoderNoReset(4750, sensors.driveLEncoder), 0.75D),
+				new ActionTankDrive(new CheckTime(0.2D), -0.2D, -0.2D),
+				new ActionSeq.Parallel(launcherIntakeManual),
+				new ActionTrackSetup(78, -88,17.2D, -232.5D),
+				new ActionWait(0.5D),
+				new ActionSeq.Parallel(launcherSpeedWheels),
+				new ActionWait(1.5D),
+				new ActionSeq.Parallel(shootWithCorrection)
+		);
+		
+		//Pos 2 RT
+		autonomous[16] = createAuto(TOP,
+				new ActionResetYaw(),
+				new ActionResetCANEncoder(sensors.driveLEncoder),
+				new ActionResetCANEncoder(sensors.driveREncoder),
+				new ActionSeq.Parallel(launcherHold),
+				new ActionMulti(
+						new ActionMotor.RampTime(driver.left, 1, 1, true),
+						new ActionMotor.RampTime(driver.right, 1, 1, true)
+				),
+				new ActionDriveStraight(new CheckCANEncoderNoReset(5500, sensors.driveLEncoder), 1D),
+				new ActionTankDrive(new CheckTime(0.2D), -0.2D, -0.2D),
+				new ActionSeq.Parallel(launcherIntakeManual),
+				new ActionTrackSetup(82, -48, 10.2D, -150D),
+				new ActionWait(0.5D),
+				new ActionSeq.Parallel(launcherSpeedWheels),
+				new ActionWait(1.5D),
+				new ActionSeq.Parallel(shootWithCorrection)
+		);
+		
+		//Pos 2 RW
+		autonomous[17] = createAuto(TOP,
+				new ActionResetYaw(),
+				new ActionResetCANEncoder(sensors.driveLEncoder),
+				new ActionResetCANEncoder(sensors.driveREncoder),
+				new ActionSeq.Parallel(launcherHold),
+				new ActionMulti(
+						new ActionMotor.RampTime(driver.left, 1, 1, true),
+						new ActionMotor.RampTime(driver.right, 1, 1, true)
+				),
+				new ActionDriveStraight(new CheckCANEncoderNoReset(6000, sensors.driveLEncoder), 1D),
+				new ActionResetCANEncoder(sensors.driveLEncoder),
+				new ActionResetCANEncoder(sensors.driveREncoder),
+				new ActionMulti(
+						new ActionMotor.RampTime(driver.left, 0, 0.3D, true),
+						new ActionMotor.RampTime(driver.right, 0, 0.3D, true)
+				),
+				new ActionDriveStraight(new CheckCANEncoderNoReset(200, sensors.driveLEncoder, false), -0.5D),
+				new ActionSeq.Parallel(launcherIntakeManual),
+				new ActionTrackSetup(82, -48, 10.2D, -150D),
+				new ActionWait(0.5D),
+				new ActionSeq.Parallel(launcherSpeedWheels),
+				new ActionWait(1.5D),
+				new ActionSeq.Parallel(shootWithCorrection)
+		);
 	}
 	
 	public static CommandRB createAuto(ArmPosition armPos, Action... actions) {
@@ -299,30 +420,4 @@ public class Autonomous
 				new ActionSeq.Parallel(shootWithCorrection)
 		);
 	}
-	
-	/*public static CommandRB createDLAuto() {
-		return createAuto(NOT_CENTRE,
-				new ActionResetYaw(),
-				new ActionSeq.Parallel(launcherHold),
-				new ActionSeq.Parallel(turretCenterFromLeft),
-				new ActionWait(0.5D),
-				new ActionMulti(
-						new ActionMotor.Set(driver.right, -0.6D, new CheckCANEncoder(1000, sensors.driveREncoder)),
-						new ActionMotor.Set(driver.left, -0.6D, new CheckCANEncoder(1000, sensors.driveLEncoder))
-				),
-				new ActionDriveStraight(new CheckCANEncoder(4500, sensors.driveLEncoder), -1D),
-				new ActionWait(0.5D),
-				new ActionSeq.Parallel(turretToShootEdge),
-				new ActionTankDrive(new CheckNavX(true, 40, NavXReadingType.ANGLE_YAW), 0.6D, -0.6D),
-				new ActionWait(0.5D),
-				new ActionDriveStraight(new CheckCANEncoder(4000, sensors.driveLEncoder), -0.9D),
-				new ActionDriveStraight(new CheckMulti.Or(new CheckTime(1.5D), new CheckCANEncoder(2500, sensors.driveLEncoder)), -0.75D),
-				new ActionDriveStraight(new CheckMulti.Or(new CheckTime(1D), new CheckNavX(true, 0.25D, NavXReadingType.ACCEL_FORWARD)), -0.75D),
-				new ActionDriveStraight(new CheckTime(0.5D), -0.4D),
-				new ActionDoNothing(new CheckCANEncoderNoReset(RobotMap.turretEdgeH - 1000, sensors.turretTiltEncoder)),
-				new ActionWait(1D),
-				new ActionDriveStraight(new CheckTime(0.5D), -0.4D),
-				new ActionSeq.Parallel(launcherShoot)
-		);
-	}*/
 }
