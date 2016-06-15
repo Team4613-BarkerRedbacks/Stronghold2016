@@ -21,20 +21,20 @@ public class ActionTurretMoveToPos extends Action
 	}
 	
 	public boolean isComplete(CommandRB command) {
-		return Math.abs(CommandBase.sensors.turretPanEncoder.get() - encPos) < 20;
+		return Math.abs((RobotMap.usePotentiometer ? CommandBase.sensors.turretPot.get() * 40 : CommandBase.sensors.turretPanEncoder.get()) - encPos) < 20;
 	}
 	
 	protected void runAction(CommandRB command) {
-		int enc = CommandBase.sensors.turretPanEncoder.get();
+		double val = RobotMap.usePotentiometer ? CommandBase.sensors.turretPot.get() * 40 : CommandBase.sensors.turretPanEncoder.get();
 		
 		double speed = 
-			Math.abs(enc - encPos) < 200 ? 
+			Math.abs(val - encPos) < 200 ? 
 					RobotMap.turretPrecisionSpeed * 
 					Math.min(Math.max(1, command.timeSinceInitialized() - startTime), 1.5D): 
-			Math.abs(enc - encPos) < 2000 ? RobotMap.turretCentraliseSpeed : 
+			Math.abs(val - encPos) < 2000 ? RobotMap.turretCentraliseSpeed : 
 			RobotMap.turretRotationSpeed;
 		
-		CommandBase.turret.pan.set(enc > encPos ? -speed : speed, command);
+		CommandBase.turret.pan.set(val > encPos ? -speed : speed, command);
 	}
 	
 	public void onFinish(CommandRB command) {

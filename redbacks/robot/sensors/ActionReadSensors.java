@@ -59,5 +59,8 @@ public class ActionReadSensors extends Action
 		
 		RobotMap.isVisionEnabled = getBoolean("Vision Enabled", RobotMap.isVisionEnabled);
 		putBoolean("Vision Enabled", RobotMap.isVisionEnabled);
+		
+		RobotMap.usePotentiometer = getBoolean("Use turret potentiometer", RobotMap.usePotentiometer);
+		putBoolean("Use turret potentiometer", RobotMap.usePotentiometer);
 	}
 }

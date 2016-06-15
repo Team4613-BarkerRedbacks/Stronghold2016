@@ -19,7 +19,7 @@ public class ActionTurretToRight extends Action
 	}
 	
 	public void runAction(CommandRB command) {
-		int enc = CommandBase.sensors.turretPanEncoder.get();
+		double enc = RobotMap.usePotentiometer ? CommandBase.sensors.turretPot.get() * 40 : CommandBase.sensors.turretPanEncoder.get();
 		if(enc > 6000) isLeft = true;
 		else if(enc < 5000) isLeft = false;
 		

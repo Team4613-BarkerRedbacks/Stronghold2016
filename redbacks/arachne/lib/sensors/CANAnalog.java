@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.CANTalon;
 public class CANAnalog
 {
 	private final CANTalon talon;
+	public double offset = 0;
 	
 	public CANAnalog(CANTalon talon) {
 		this.talon = talon;
@@ -20,6 +21,6 @@ public class CANAnalog
 	}
 	
 	public double get() {
-		return talon.getAnalogInPosition();
+		return talon.getAnalogInPosition() + offset;
 	}
 }

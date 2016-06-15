@@ -12,6 +12,7 @@ import redbacks.arachne.lib.checks.can.CheckCANDI;
 import redbacks.arachne.lib.checks.can.CheckCANEncoder;
 import redbacks.arachne.lib.commands.CommandHolder;
 import redbacks.arachne.lib.commands.CommandRB;
+import redbacks.robot.sensors.CheckTurretPan;
 
 public class ActionTurretFastCenterAuto extends Action
 {
@@ -23,7 +24,7 @@ public class ActionTurretFastCenterAuto extends Action
 								new CheckCANDI(sensors.turretMagLSwitch, true), 
 								new CheckCANDI(sensors.turretMagRSwitch, true)
 						),
-						new CheckCANEncoder(7000, sensors.turretPanEncoder),
+						new CheckTurretPan(7000),
 						new CheckTime(3)
 				)
 		);

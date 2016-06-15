@@ -21,16 +21,27 @@ public class ActionTurretCenter extends Action
 	}
 	
 	public void onStart(CommandRB command) {
-		startPosIsReset = Math.abs(CommandBase.sensors.turretPanEncoder.get()) < 200;
+		startPosIsReset = RobotMap.usePotentiometer ? Math.abs(CommandBase.sensors.turretPot.get()) < 5 : Math.abs(CommandBase.sensors.turretPanEncoder.get()) < 200;
 		CommandList.trackerClear.c().start();
 	}
 	
 	public void runAction(CommandRB command) {
-		int enc = CommandBase.sensors.turretPanEncoder.get();
-		if(enc > 200) isLeft = true;
-		else if(enc < -200) isLeft = false;
+		double speed;
 		
-		double speed = Math.abs(enc) < 1500 ? RobotMap.turretCentraliseSpeed : RobotMap.turretRotationSpeed;
+		if(RobotMap.usePotentiometer) {
+			int pot = (int) (CommandBase.sensors.turretPot.get());
+			if(pot > 5) isLeft = true;
+			else if(pot < -5) isLeft = false;
+			
+			speed = Math.abs(CommandBase.sensors.turretPot.get()) < 38 ? RobotMap.turretCentraliseSpeed : RobotMap.turretRotationSpeed;
+		}
+		else {
+			int enc = CommandBase.sensors.turretPanEncoder.get();
+			if(enc > 200) isLeft = true;
+			else if(enc < -200) isLeft = false;
+			
+			speed = Math.abs(enc) < 1500 ? RobotMap.turretCentraliseSpeed : RobotMap.turretRotationSpeed;
+		}
 		
 		CommandBase.turret.pan.set(isLeft ? -speed : speed, command);
 	}
