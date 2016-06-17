@@ -42,7 +42,6 @@ public class SubsystemSensors extends SubsystemRB
 	 */
 	public final void initSensors() {
 		NavX.reset();
-		turretPot.offset = -510;
 	}
 
 	//Set up functions using the sensors here. For example, if sensors should be grouped because they fulfill the same function.

@@ -9,8 +9,7 @@ package redbacks.arachne.core.references;
 public class RobotMap {
 	//Global variables
 	public static boolean
-		isVisionEnabled = false,
-		usePotentiometer = true;
+		isVisionEnabled = false;
 	
 	//Talon SRX CAN IDs
 	//Start at 2.
@@ -64,7 +63,6 @@ public class RobotMap {
 		
 		turretEdgeH = 70000,//68000,
 		turretEdgeR = -6000,//-6225,//Done
-		turretEdgePot = 671,
 		
 		turretMidH = 63000,
 		turretMidR = -5800,//-6100,//Done
@@ -73,7 +71,6 @@ public class RobotMap {
 		
 		turretSPH = 80000,//71000,//69000,
 		turretSPR = 6300,//6625,//6425//Done
-		turretSPPot = 351,
 		
 		turretLBH = 45500,
 		turretLBR = 2490,//Done

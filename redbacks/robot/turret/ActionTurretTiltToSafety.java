@@ -14,7 +14,7 @@ public class ActionTurretTiltToSafety extends ActionTurretTiltToPos
 	}
 	
 	public boolean isComplete(CommandRB command) {
-		return Math.abs(CommandBase.sensors.turretTiltEncoder.get() - encPos) < 3000 || Math.abs((RobotMap.usePotentiometer ? CommandBase.sensors.turretPot.get() * 40 : CommandBase.sensors.turretPanEncoder.get()) - panPos) < 1000;		
+		return Math.abs(CommandBase.sensors.turretTiltEncoder.get() - encPos) < 3000 || Math.abs(CommandBase.sensors.turretPanEncoder.get() - panPos) < 1000;		
 	}
 	
 	public void runAction(CommandRB command) {

@@ -9,7 +9,7 @@ import redbacks.arachne.lib.commands.CommandRB;
 public class ActionTurretMoveDis extends Action
 {
 	int dis;
-	double pos = 9999;
+	int encPos = 9999;
 	double startTime;
 	
 	public ActionTurretMoveDis(int encoderPosition) {
@@ -19,28 +19,28 @@ public class ActionTurretMoveDis extends Action
 
 	public void onStart(CommandRB command) {
 		startTime = command.timeSinceInitialized();
-		pos = RobotMap.usePotentiometer ? CommandBase.sensors.turretPot.get() * 40 + dis : CommandBase.sensors.turretPanEncoder.get() + dis;
+		encPos = CommandBase.sensors.turretPanEncoder.get() + dis;
 	}
 	
 	public boolean isComplete(CommandRB command) {
-		return Math.abs((RobotMap.usePotentiometer ? CommandBase.sensors.turretPot.get() * 40 : CommandBase.sensors.turretPanEncoder.get()) - pos) < 20;
+		return Math.abs(CommandBase.sensors.turretPanEncoder.get() - encPos) < 20;
 	}
 	
 	protected void runAction(CommandRB command) {
-		double val = RobotMap.usePotentiometer ? CommandBase.sensors.turretPot.get() * 40 : CommandBase.sensors.turretPanEncoder.get();
+		int enc = CommandBase.sensors.turretPanEncoder.get();
 		
 		double speed = 
-			Math.abs(val - pos) < 200 ? 
+			Math.abs(enc - encPos) < 200 ? 
 					RobotMap.turretPrecisionSpeed * 
 					Math.min(Math.max(1, command.timeSinceInitialized() - startTime), 3): 
-			Math.abs(val - pos) < 2000 ? RobotMap.turretCentraliseSpeed : 
+			Math.abs(enc - encPos) < 2000 ? RobotMap.turretCentraliseSpeed : 
 			RobotMap.turretRotationSpeed;
 		
-		CommandBase.turret.pan.set(val > pos ? -speed : speed, command);
+		CommandBase.turret.pan.set(enc > encPos ? -speed : speed, command);
 	}
 	
 	public void onFinish(CommandRB command) {
 		CommandBase.turret.pan.disable();
-		pos = 9999;
+		encPos = 9999;
 	}
 }
