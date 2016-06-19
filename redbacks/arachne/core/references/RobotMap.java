@@ -56,7 +56,7 @@ public class RobotMap {
     
     //Magic Numbers 
     public static final int
-		turretIntakePos = 11000,
+		turretIntakePos = 16000,
 		
 		turretCornerH = 57000,//49000,//50000//47500,
 		turretCornerR = -5600,//-5750,//-5950,//Done
