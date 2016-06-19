@@ -279,11 +279,9 @@ public class Autonomous
 				),
 				new ActionDriveStraight(new CheckCANEncoderNoReset(5500, sensors.driveLEncoder), 1D),
 				new ActionTankDrive(new CheckTime(0.2D), -0.2D, -0.2D),
-				new ActionSeq.Parallel(launcherIntakeManual),
+				new ActionMulti(new CheckCANEncoderNoReset(45000, sensors.turretTiltEncoder), new ActionTurretTiltToPos(45000)),
 				new ActionTrackSetup(65, -60, 12.5D, -150D),
 				new ActionWait(0.5D),
-				new ActionSeq.Parallel(launcherSpeedWheels),
-				new ActionWait(1.5D),
 				new ActionSeq.Parallel(shootWithCorrection)
 		);
 		
@@ -304,12 +302,12 @@ public class Autonomous
 						new ActionMotor.RampTime(driver.left, 0, 0.3D, true),
 						new ActionMotor.RampTime(driver.right, 0, 0.3D, true)
 				),
-				new ActionDriveStraight(new CheckCANEncoderNoReset(200, sensors.driveLEncoder, false), -0.5D),
-				new ActionSeq.Parallel(launcherIntakeManual),
+				new ActionMulti(
+					new ActionDriveStraight(new CheckCANEncoderNoReset(200, sensors.driveLEncoder, false), -0.5D),
+					new ActionMulti(new CheckCANEncoderNoReset(45000, sensors.turretTiltEncoder), new ActionTurretTiltToPos(45000))
+				),
 				new ActionTrackSetup(65, -60, 12.5D, -150D),
 				new ActionWait(0.5D),
-				new ActionSeq.Parallel(launcherSpeedWheels),
-				new ActionWait(1.5D),
 				new ActionSeq.Parallel(shootWithCorrection)
 		);
 		
@@ -352,11 +350,9 @@ public class Autonomous
 				),
 				new ActionDriveStraight(new CheckCANEncoderNoReset(5500, sensors.driveLEncoder), 1D),
 				new ActionTankDrive(new CheckTime(0.2D), -0.2D, -0.2D),
-				new ActionSeq.Parallel(launcherIntakeManual),
+				new ActionMulti(new CheckCANEncoderNoReset(45000, sensors.turretTiltEncoder), new ActionTurretTiltToPos(45000)),
 				new ActionTrackSetup(82, -48, 10.2D, -150D),
 				new ActionWait(0.5D),
-				new ActionSeq.Parallel(launcherSpeedWheels),
-				new ActionWait(1.5D),
 				new ActionSeq.Parallel(shootWithCorrection)
 		);
 		
@@ -377,12 +373,12 @@ public class Autonomous
 						new ActionMotor.RampTime(driver.left, 0, 0.3D, true),
 						new ActionMotor.RampTime(driver.right, 0, 0.3D, true)
 				),
-				new ActionDriveStraight(new CheckCANEncoderNoReset(200, sensors.driveLEncoder, false), -0.5D),
-				new ActionSeq.Parallel(launcherIntakeManual),
+				new ActionMulti(
+						new ActionDriveStraight(new CheckCANEncoderNoReset(200, sensors.driveLEncoder, false), -0.5D),
+						new ActionMulti(new CheckCANEncoderNoReset(45000, sensors.turretTiltEncoder), new ActionTurretTiltToPos(45000))
+				),
 				new ActionTrackSetup(82, -48, 10.2D, -150D),
 				new ActionWait(0.5D),
-				new ActionSeq.Parallel(launcherSpeedWheels),
-				new ActionWait(1.5D),
 				new ActionSeq.Parallel(shootWithCorrection)
 		);
 	}
