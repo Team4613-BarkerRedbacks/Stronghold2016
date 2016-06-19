@@ -330,13 +330,13 @@ public class Autonomous
 						new ActionMotor.RampTime(driver.left, 0, 0.3D, true),
 						new ActionMotor.RampTime(driver.right, 0, 0.3D, true)
 				),
-				new ActionDriveStraight(new CheckCANEncoderNoReset(4750, sensors.driveLEncoder), 0.75D),
+				new ActionMulti(
+						new ActionDriveStraight(new CheckCANEncoderNoReset(4750, sensors.driveLEncoder), 0.75D),
+						new ActionMulti(new CheckCANEncoderNoReset(70000, sensors.turretTiltEncoder), new ActionTurretTiltToPos(73000))
+				),
 				new ActionTankDrive(new CheckTime(0.2D), -0.2D, -0.2D),
-				new ActionSeq.Parallel(launcherIntakeManual),
 				new ActionTrackSetup(78, -88,17.2D, -232.5D),
 				new ActionWait(0.5D),
-				new ActionSeq.Parallel(launcherSpeedWheels),
-				new ActionWait(1.5D),
 				new ActionSeq.Parallel(shootWithCorrection)
 		);
 		
