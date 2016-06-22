@@ -281,7 +281,7 @@ public class Autonomous
 				new ActionTankDrive(new CheckTime(0.2D), -0.2D, -0.2D),
 				new ActionMulti(new CheckCANEncoderNoReset(45000, sensors.turretTiltEncoder), new ActionTurretTiltToPos(45000)),
 				new ActionTrackSetup(65, -60, 12.5D, -150D),
-				new ActionWait(0.5D),
+				new ActionWait(1.5D),
 				new ActionSeq.Parallel(shootWithCorrection)
 		);
 		
@@ -307,7 +307,7 @@ public class Autonomous
 					new ActionMulti(new CheckCANEncoderNoReset(45000, sensors.turretTiltEncoder), new ActionTurretTiltToPos(45000))
 				),
 				new ActionTrackSetup(65, -60, 12.5D, -150D),
-				new ActionWait(0.5D),
+				new ActionWait(1.5D),
 				new ActionSeq.Parallel(shootWithCorrection)
 		);
 		
@@ -351,8 +351,8 @@ public class Autonomous
 				new ActionDriveStraight(new CheckCANEncoderNoReset(5500, sensors.driveLEncoder), 1D),
 				new ActionTankDrive(new CheckTime(0.2D), -0.2D, -0.2D),
 				new ActionMulti(new CheckCANEncoderNoReset(45000, sensors.turretTiltEncoder), new ActionTurretTiltToPos(45000)),
-				new ActionTrackSetup(82, -48, 10.2D, -150D),
-				new ActionWait(0.5D),
+				new ActionTrackSetup(82, -48, 12.5D, -150D),
+				new ActionWait(1.5D),
 				new ActionSeq.Parallel(shootWithCorrection)
 		);
 		
@@ -377,8 +377,60 @@ public class Autonomous
 						new ActionDriveStraight(new CheckCANEncoderNoReset(200, sensors.driveLEncoder, false), -0.5D),
 						new ActionMulti(new CheckCANEncoderNoReset(45000, sensors.turretTiltEncoder), new ActionTurretTiltToPos(45000))
 				),
-				new ActionTrackSetup(82, -48, 10.2D, -150D),
+				new ActionTrackSetup(82, -48, 12.5D, -150D),
+				new ActionWait(1.5D),
+				new ActionSeq.Parallel(shootWithCorrection)
+		);
+		
+		//Pos 2 RT
+		autonomous[18] = createAuto(TOP,
+				new ActionResetYaw(),
+				new ActionSeq.Parallel(turretCenterFromLeft),
+				new ActionResetCANEncoder(sensors.driveLEncoder),
+				new ActionResetCANEncoder(sensors.driveREncoder),
+				new ActionSeq.Parallel(launcherHold),
+				new ActionMulti(
+						new ActionMotor.RampTime(driver.left, 1, 1, true),
+						new ActionMotor.RampTime(driver.right, 1, 1, true)
+				),
+				new ActionDriveStraight(new CheckCANEncoderNoReset(5500, sensors.driveLEncoder), 1D),
+				new ActionTankDrive(new CheckTime(0.2D), -0.2D, -0.2D),
+				new ActionSeq.Parallel(turretToShootFront),
+				
+				new ActionTankDrive(new CheckNavX(true, autoCross2Ang, NavXReadingType.ANGLE_YAW), 0.5D, -0.5D),
 				new ActionWait(0.5D),
+				new ActionTankDrive(new CheckCANEncoder(autoCross2Dis * autoEncMul, sensors.driveLEncoder), 0.8D, 0.8D),
+				new ActionTankDrive(new CheckNavX(false, -autoCross2Ang + 10, NavXReadingType.ANGLE_YAW), -0.5D, 0.5D),
+				new ActionWait(1D),
+				new ActionSeq.Parallel(shootWithCorrection)
+		);
+		
+		//Pos 2 RW
+		autonomous[19] = createAuto(TOP,
+				new ActionResetYaw(),
+				new ActionSeq.Parallel(turretCenterFromLeft),
+				new ActionResetCANEncoder(sensors.driveLEncoder),
+				new ActionResetCANEncoder(sensors.driveREncoder),
+				new ActionSeq.Parallel(launcherHold),
+				new ActionMulti(
+						new ActionMotor.RampTime(driver.left, 1, 1, true),
+						new ActionMotor.RampTime(driver.right, 1, 1, true)
+				),
+				new ActionDriveStraight(new CheckCANEncoderNoReset(6000, sensors.driveLEncoder), 1D),
+				new ActionResetCANEncoder(sensors.driveLEncoder),
+				new ActionResetCANEncoder(sensors.driveREncoder),
+				new ActionMulti(
+						new ActionMotor.RampTime(driver.left, 0, 0.3D, true),
+						new ActionMotor.RampTime(driver.right, 0, 0.3D, true)
+				),
+				new ActionDriveStraight(new CheckCANEncoderNoReset(200, sensors.driveLEncoder, false), -0.5D),
+				new ActionSeq.Parallel(turretToShootFront),
+				
+				new ActionTankDrive(new CheckNavX(true, autoCross2Ang, NavXReadingType.ANGLE_YAW), 0.5D, -0.5D),
+				new ActionWait(0.5D),
+				new ActionTankDrive(new CheckCANEncoder(autoCross2Dis * autoEncMul, sensors.driveLEncoder), 0.8D, 0.8D),
+				new ActionTankDrive(new CheckNavX(false, -autoCross2Ang + 10, NavXReadingType.ANGLE_YAW), -0.5D, 0.5D),
+				new ActionWait(1D),
 				new ActionSeq.Parallel(shootWithCorrection)
 		);
 	}

@@ -41,12 +41,12 @@ public class RobotMap {
     	autoAngleCor = 500,
     	
     	//3 taken off magnitude of each value
-    	autoCross2Ang = 48,
+    	autoCross2Ang = 52,
     	autoCross3Ang = 26,
     	autoCross4Ang = -8,
     	autoCross5Ang = -40,
     	
-    	autoCross2Dis = 6027,
+    	autoCross2Dis = 6300,
     	autoCross3Dis = 4287,
     	autoCross4Dis = 3500,//3826,
     	autoCross5Dis = 5123;
