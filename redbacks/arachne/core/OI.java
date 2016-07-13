@@ -53,8 +53,6 @@ public class OI
 		whenPressed(d_RB, sequenceCrossingConfig.c());
 		whenPressed(d_RT, armToMax.c());
 		
-		whenPressed(d_Back, turretToShootD3Back.c());
-		
 		//Operator
 		whenPressed(o_ShootTL1, turretToShootCorner.c()); 
 		whenPressed(o_ShootTL2, turretToShootMid.c());

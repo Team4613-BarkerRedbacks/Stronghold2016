@@ -10,7 +10,6 @@ public class ActionTurretMoveToPos extends Action
 {
 	int encPos;
 	double startTime;
-	boolean there = false;
 	
 	public ActionTurretMoveToPos(int encoderPosition) {
 		super(new CheckNever());
@@ -28,16 +27,11 @@ public class ActionTurretMoveToPos extends Action
 	protected void runAction(CommandRB command) {
 		int enc = CommandBase.sensors.turretPanEncoder.get();
 		
-		if((encPos > enc) == there) {
-			startTime = command.timeSinceInitialized();
-			there = !there;
-		}
-		
 		double speed = 
 			Math.abs(enc - encPos) < 200 ? 
-					(Math.abs(enc) > 8000 ? RobotMap.turretCentraliseSpeed : RobotMap.turretPrecisionSpeed) * 
-					Math.min(Math.max(1, command.timeSinceInitialized() - startTime), 2.5D): 
-			Math.abs(enc - encPos) < 500 ? RobotMap.turretCentraliseSpeed : 
+					RobotMap.turretPrecisionSpeed * 
+					Math.min(Math.max(1, command.timeSinceInitialized() - startTime), 1.5D): 
+			Math.abs(enc - encPos) < 2000 ? RobotMap.turretCentraliseSpeed : 
 			RobotMap.turretRotationSpeed;
 		
 		CommandBase.turret.pan.set(enc > encPos ? -speed : speed, command);

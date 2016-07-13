@@ -99,5 +99,5 @@ public class RobotMap {
     	    	
     	turretRotationSpeed = 1.0D,
     	turretCentraliseSpeed = 0.2D,
-    	turretPrecisionSpeed = 0.075D;//0.125D; //WAS 0.1D
+    	turretPrecisionSpeed = 0.125D; //WAS 0.1D
 }

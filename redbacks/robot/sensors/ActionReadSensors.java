@@ -1,6 +1,7 @@
 package redbacks.robot.sensors;
 
 import static edu.wpi.first.wpilibj.smartdashboard.SmartDashboard.*;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import redbacks.arachne.core.references.RobotMap;
 import redbacks.arachne.lib.actions.Action;
 import redbacks.arachne.lib.checks.CheckNever;
