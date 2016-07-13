@@ -30,7 +30,7 @@ public class ActionTurretCenter extends Action
 		if(enc > 200) isLeft = true;
 		else if(enc < -200) isLeft = false;
 		
-		double speed = Math.abs(enc) < 1500 ? RobotMap.turretCentraliseSpeed : RobotMap.turretRotationSpeed;
+		double speed = Math.abs(enc) < 200 ? RobotMap.turretPrecisionSpeed : Math.abs(enc) < 1500 ? RobotMap.turretCentraliseSpeed : RobotMap.turretRotationSpeed;
 		
 		CommandBase.turret.pan.set(isLeft ? -speed : speed, command);
 	}
