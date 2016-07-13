@@ -11,6 +11,7 @@ public class ActionTurretMoveDis extends Action
 	int dis;
 	int encPos = 9999;
 	double startTime;
+	boolean there = false;
 	
 	public ActionTurretMoveDis(int encoderPosition) {
 		super(new CheckNever());
@@ -29,11 +30,16 @@ public class ActionTurretMoveDis extends Action
 	protected void runAction(CommandRB command) {
 		int enc = CommandBase.sensors.turretPanEncoder.get();
 		
+		if((encPos > enc) == there) {
+			startTime = command.timeSinceInitialized();
+			there = !there;
+		}
+		
 		double speed = 
 			Math.abs(enc - encPos) < 200 ? 
-					RobotMap.turretPrecisionSpeed * 
+					(Math.abs(enc) > 8000 ? RobotMap.turretCentraliseSpeed : RobotMap.turretPrecisionSpeed) * 
 					Math.min(Math.max(1, command.timeSinceInitialized() - startTime), 3): 
-			Math.abs(enc - encPos) < 2000 ? RobotMap.turretCentraliseSpeed : 
+			Math.abs(enc - encPos) < 500 ? RobotMap.turretCentraliseSpeed : 
 			RobotMap.turretRotationSpeed;
 		
 		CommandBase.turret.pan.set(enc > encPos ? -speed : speed, command);
