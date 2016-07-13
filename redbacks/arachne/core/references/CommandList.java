@@ -27,6 +27,7 @@ import redbacks.robot.intake.ActionIntakeWhileAtBase;
 import redbacks.robot.launcher.vision.ActionTrackClear;
 import redbacks.robot.launcher.vision.ActionTrackSetup;
 import redbacks.robot.launcher.vision.ActionTrackV3;
+import redbacks.robot.launcher.vision.ActionTrackV3WithReset;
 import redbacks.robot.sensors.ActionReadSensors;
 import redbacks.robot.turret.ActionSetZeroed;
 import redbacks.robot.turret.ActionTurretCenter;
@@ -80,7 +81,8 @@ public class CommandList
 		lightsSwitch = newCom(new ActionRelay(sensors.lights)),
 		
 		trackerClear = newCom(new ActionTrackClear()),
-		shootWithCorrection = newCom(new ActionTrackV3());
+		shootWithCorrection = newCom(new ActionTrackV3()),
+		shootWithCorrectionAndReset = newCom(new ActionTrackV3WithReset());
 
 	//Sensors
 	static SwitchSubsystem s_sensors = new SwitchSubsystem(sensors);
@@ -241,19 +243,21 @@ public class CommandList
 		),
 		
 		turretToShootCorner = goToShootPos(RobotMap.turretCornerH, RobotMap.turretCornerR, NOT_BASE),
-		turretToShootEdge = goToShootPos(RobotMap.turretEdgeH, RobotMap.turretEdgeR, NOT_BASE),
+		turretToShootEdge = goToShootPos(RobotMap.turretEdgeH - 2000, -6350, NOT_BASE),
 		turretToShootFront = goToShootPos(RobotMap.turretFrontH, 0, NOT_BASE, 72, -90, 17.2D, -232.5D),
 		turretToShootMid = goToShootPos(RobotMap.turretMidH, RobotMap.turretMidR, NOT_BASE),		
 		turretToShootSecretPassage = goToShootPos(RobotMap.turretSPH, RobotMap.turretSPR, CENTRE),
 		
 		turretToShootLowBar = goToShootPos(RobotMap.turretLBH, RobotMap.turretLBR, NOT_CENTRE, 70, -30, 12.5D, -150D),
 		turretToShootD2 = goToShootPos(RobotMap.turretD2H, RobotMap.turretD2R, NOT_CENTRE),
-		turretToShootD3 = goToShootPos(RobotMap.turretD3H, RobotMap.turretD3R, NOT_CENTRE),
+		turretToShootD3 = goToShootPos(RobotMap.turretD3H, RobotMap.turretD3R, NOT_CENTRE, 65, -20, 12.5D, -150D),
 		turretToShootD4 = goToShootPos(RobotMap.turretD4H, RobotMap.turretD4R, NOT_CENTRE),
 		turretToShootD5 = goToShootPos(RobotMap.turretD5H, RobotMap.turretD5R, NOT_CENTRE),
 		
 		turretToShootCornerAuto3 = goToShootPos(48000, -5975, NOT_BASE),//TEST
-		turretToShootEdgeAuto10 = goToShootPos(RobotMap.turretEdgeH - 1000, RobotMap.turretEdgeR - 50, NOT_BASE);
+		turretToShootEdgeAuto10 = goToShootPos(RobotMap.turretEdgeH - 1000, RobotMap.turretEdgeR - 50, NOT_BASE),
+		turretToShootD2Back = goToShootPos(35000, -8800, CENTRE, 50, 40, 12.5D, -150D),
+		turretToShootD3Back = goToShootPos(45000, 1500, TOP, 65, -20, 12.5D, -160D);//40000, -9600, CENTRE, 65, -20, 12.5D, -250D);
 	
 	//Sequences
 	static SwitchSubsystem s_sequencer = new SwitchSubsystem(sequencer);
@@ -272,7 +276,7 @@ public class CommandList
 				new ActionSeq.Parallel(turretToIntake)
 		),
 		sequenceIntakeToShooter = newCom(
-				new ActionSeq.Parallel(intake, new ActionWait(0.5D)),
+				new ActionSeq.Parallel(intake, new ActionMotor.Set(intake.intake, -0.5D, new CheckTime(0.1D)), new ActionMotor.Disable(intake.intake)),//new ActionWait(0.5D)),
 				new ActionSeq.Parallel(armToIntake),
 				new ActionSeq.Parallel(launcherIntakeFast),
 				new ActionWait(1D),
@@ -283,10 +287,10 @@ public class CommandList
 				new ActionSeq.Parallel(intake, new ActionWait(0.5D))
 		),
 		sequenceIntakeToShooterHeld = newCom(
-				new ActionSeq.Parallel(intake, new ActionWait(0.5D)),
+				new ActionSeq.Parallel(intake, new ActionMotor.Set(intake.intake, -0.5D, new CheckTime(0.1D)), new ActionMotor.Disable(intake.intake)),//new ActionWait(0.5D)),
 				new ActionSeq.Parallel(armToIntake),
 				new ActionSeq.Parallel(launcherIntakeFast),
-				new ActionWait(1D),
+				new ActionWait(1.5D),
 				new ActionSeq.Parallel(intakeIntakeBallFast),
 				new ActionDoNothing()
 		),
