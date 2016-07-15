@@ -27,7 +27,7 @@ import redbacks.robot.intake.ActionIntakeWhileAtBase;
 import redbacks.robot.launcher.vision.ActionTrackClear;
 import redbacks.robot.launcher.vision.ActionTrackSetup;
 import redbacks.robot.launcher.vision.ActionTrackV3;
-import redbacks.robot.launcher.vision.ActionTrackV3WithReset;
+//import redbacks.robot.launcher.vision.ActionTrackV3WithReset;
 import redbacks.robot.sensors.ActionReadSensors;
 import redbacks.robot.turret.ActionSetZeroed;
 import redbacks.robot.turret.ActionTurretCenter;
@@ -81,8 +81,8 @@ public class CommandList
 		lightsSwitch = newCom(new ActionRelay(sensors.lights)),
 		
 		trackerClear = newCom(new ActionTrackClear()),
-		shootWithCorrection = newCom(new ActionTrackV3()),
-		shootWithCorrectionAndReset = newCom(new ActionTrackV3WithReset());
+		shootWithCorrection = newCom(new ActionTrackV3());//,
+		//shootWithCorrectionAndReset = newCom(new ActionTrackV3WithReset());
 
 	//Sensors
 	static SwitchSubsystem s_sensors = new SwitchSubsystem(sensors);
@@ -225,6 +225,15 @@ public class CommandList
 				new ActionSetCANEncoder(sensors.turretPanEncoder, -RobotMap.turretCentreOffsetR),
 				new ActionSetZeroed(),
 				new ActionTurretMoveToPos(0)
+		),
+		turretCenterFastFromRight = newCom(
+				new ActionSeq.Parallel(trackerClear),
+				new ActionTurretTiltReset(),
+				new ActionMotor.Set(turret.pan, -0.6D, new CheckMulti.And(
+						new CheckCANDI(sensors.turretMagLSwitch, true), 
+						new CheckCANDI(sensors.turretMagRSwitch, true)
+				)),
+				new ActionSeq.Parallel(turretCenterFastFromLeft)
 		),
 		turretCenter = newCom(
 				new ActionTurretCenter(),

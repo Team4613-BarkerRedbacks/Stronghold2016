@@ -285,7 +285,7 @@ public class Autonomous
 						new ActionMotor.RampTime(driver.right, 0, 0.3D, true)
 				),
 				new ActionMulti(
-					new ActionDriveStraight(new CheckCANEncoderNoReset(200, sensors.driveLEncoder, false), -0.5D),
+					new ActionDriveStraight(new CheckMulti.Or(new CheckCANEncoderNoReset(200, sensors.driveLEncoder, false), new CheckTime(4)), -0.5D),
 					new ActionMulti(new CheckCANEncoderNoReset(45000, sensors.turretTiltEncoder), new ActionTurretTiltToPos(45000))
 				),
 				new ActionTrackSetup(65, -60, 12.5D, -150D),
@@ -466,7 +466,7 @@ public class Autonomous
 				),
 				new ActionTrackSetup(65, -60, 12.5D, -150D),
 				new ActionWait(1.5D),
-				new ActionSeq.Parallel(shootWithCorrectionAndReset),
+				//FIXME new ActionSeq.Parallel(shootWithCorrectionAndReset),
 				new ActionDoNothing(new CheckMotor(0.7D, launcher.polycord)),
 				new ActionWait(1D),
 				new ActionTankDrive(new CheckNavXNR(true, 150, NavXReadingType.ANGLE_YAW), 0.8D, -0.8D),
