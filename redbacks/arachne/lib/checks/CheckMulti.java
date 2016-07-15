@@ -30,6 +30,18 @@ public abstract class CheckMulti extends Check
 		else checklist = checks;
 	}
 	
+	public void begin(CommandRB command, Action action) {
+		for(Check check : checklist) check.begin(command, action);
+	}
+	
+	public void run(CommandRB command, Action action) {
+		for(Check check : checklist) check.run(command, action);
+	}
+	
+	public void done(CommandRB command, Action action) {
+		for(Check check : checklist) check.done(command, action);
+	}
+	
 	/**
 	 * Requires all subchecks to be true.
 	 */
