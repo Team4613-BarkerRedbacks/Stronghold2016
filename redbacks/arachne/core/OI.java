@@ -52,8 +52,9 @@ public class OI
 		whenPressed(d_LB, sequenceLowConfig.c());
 		whenPressed(d_RB, sequenceCrossingConfig.c());
 		whenPressed(d_RT, armToMax.c());
-		
+
 		whenPressed(d_Back, turretToShootD3Back.c());
+		whenPressed(d_Start, turretCenterFastFromRight.c());
 		
 		//Operator
 		whenPressed(o_ShootTL1, turretToShootCorner.c()); 
@@ -112,6 +113,9 @@ public class OI
 		axis_d_RT = new JoystickAxis(stick_d, 3),
 		axis_d_RX = new JoystickAxis(stick_d, 4),
 		axis_d_RY = new JoystickAxis(stick_d, 5),
+		
+		axis_l_X = new JoystickAxis(stick_l, 0),
+		axis_r_X = new JoystickAxis(stick_r, 0),
 		
 		axis_l_Y = new JoystickAxis(stick_l, 1),
 		axis_r_Y = new JoystickAxis(stick_r, 1);
