@@ -43,6 +43,6 @@ public class ActionDriveStraightReverse extends Action
 	}
 	
 	public double getYaw() {
-		return NavX.getYaw() + (NavX.getYaw() < 0 ? 360 : 0) - 180;
+		return NavX.getYaw() + (NavX.getYaw() < -90 ? 360 : 0) - 180;
 	}
 }
