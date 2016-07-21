@@ -448,6 +448,30 @@ public class Autonomous
 				new ActionResetYaw(),
 				new ActionResetCANEncoder(sensors.driveLEncoder),
 				new ActionResetCANEncoder(sensors.driveREncoder),
+				new ActionMulti(
+						new ActionMotor.RampTime(driver.left, 1, 0.5D, true),
+						new ActionMotor.RampTime(driver.right, 1, 0.5D, true)
+				),
+				new ActionDriveStraight(new CheckCANEncoderNoReset(6000, sensors.driveLEncoder), 1D),
+				new ActionResetCANEncoder(sensors.driveLEncoder),
+				new ActionResetCANEncoder(sensors.driveREncoder),
+				new ActionMulti(
+						new ActionMotor.RampTime(driver.left, -0.2D, 0.4D, true),
+						new ActionMotor.RampTime(driver.right, -0.2D, 0.4D, true)
+				),
+				new ActionWait(1D),
+				new ActionSeq.Parallel(armToIntake),
+				new ActionSeq.Parallel(turretCenterFastFromRight),
+				new ActionDriveStraightReverse(new CheckHasTurned(), 0),
+				new ActionDriveStraightReverse(new CheckCANEncoder(6000, sensors.driveLEncoder), 1),
+				new ActionDriveStraightReverse(new CheckCANEncoderNoReset(5800, sensors.driveLEncoder), -0.5D),
+				new ActionSeq.Parallel(sequenceIntakeGround),
+				new ActionDriveStraightReverse(new CheckCANEncoderNoReset(7500, sensors.driveLEncoder), 0.5D),
+				new ActionTankDrive(new CheckTime(0.25D), -0.2D, -0.2D)
+				
+				/*new ActionResetYaw(),
+				new ActionResetCANEncoder(sensors.driveLEncoder),
+				new ActionResetCANEncoder(sensors.driveREncoder),
 				new ActionSeq.Parallel(launcherHold),
 				new ActionMulti(
 						new ActionMotor.RampTime(driver.left, 1, 1, true),
@@ -482,7 +506,7 @@ public class Autonomous
 						new ActionMotor.RampTime(driver.left, 0, 0.3D, true),
 						new ActionMotor.RampTime(driver.right, 0, 0.3D, true)
 				),
-				new ActionDriveStraightReverse(new CheckCANEncoderNoReset(5500, sensors.driveLEncoder, false), 0.6D)
+				new ActionDriveStraightReverse(new CheckCANEncoderNoReset(5500, sensors.driveLEncoder, false), 0.6D)*/
 		);
 		
 		autonomous[61] = createAuto(CENTRE,
@@ -500,11 +524,12 @@ public class Autonomous
 				new ActionShift(false)
 		);
 		
-//		autonomous[62] = createAuto(TOP,
-//				new ActionResetCANEncoder(sensors.driveLEncoder),
-//				new ActionResetCANEncoder(sensors.driveREncoder),
-//				new ActionDriveStraight(new CheckNever(), 0)
-//		);
+		autonomous[62] = createAuto(TOP,
+				new ActionResetYaw(),
+				new ActionResetCANEncoder(sensors.driveLEncoder),
+				new ActionResetCANEncoder(sensors.driveREncoder),
+				new ActionDriveStraightReverse(new CheckNever(), 1.0D)
+		);
 		
 //		autonomous[63] = createAuto(TOP,
 //				new ActionResetCANEncoder(sensors.driveLEncoder),
