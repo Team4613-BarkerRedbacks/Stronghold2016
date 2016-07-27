@@ -61,8 +61,7 @@ public class ActionTrackV3WithReset extends Action
 					new ActionWait(0.5D),
 					new ActionSeq.Parallel(CommandList.launcherShootManual),
 					new ActionWait(2), 
-					new ActionMotor.Set(turret.pan, -1, new CheckCANEncoderNoAbs(-100, sensors.turretPanEncoder, false)),
-					new ActionSeq.Parallel(CommandList.turretCenterFastFromLeft)
+					new ActionSeq.Parallel(CommandList.turretCenterFast)
 			).c().start();
 		}
 	}

@@ -9,7 +9,7 @@ package redbacks.arachne.core.references;
 public class RobotMap {
 	//Global variables
 	public static boolean
-		isVisionEnabled = false;
+		isVisionEnabled = true;
 	
 	//Talon SRX CAN IDs
 	//Start at 2.
@@ -36,61 +36,10 @@ public class RobotMap {
     public static final int
     	lightsRelayID = 0;
     
-    //Autonomous magic numbers
-    public static final int
-    	autoAngleCor = 500,
-    	
-    	//3 taken off magnitude of each value
-    	autoCross2Ang = 52,
-    	autoCross3Ang = 26,
-    	autoCross4Ang = -8,
-    	autoCross5Ang = -40,
-    	
-    	autoCross2Dis = 6300,
-    	autoCross3Dis = 4287,
-    	autoCross4Dis = 3500,//3826,
-    	autoCross5Dis = 5123;
-
-    public static final double
-    	autoEncMul = 0.6D;
-    
     //Magic Numbers 
-    public static final int
-		turretIntakePos = 16000,
-		
-		turretCornerH = 57000,//49000,//50000//47500,
-		turretCornerR = -5600,//-5750,//-5950,//Done
-		
-		turretEdgeH = 70000,//68000,
-		turretEdgeR = -6000,//-6225,//Done
-		
-		turretMidH = 63000,
-		turretMidR = -5800,//-6100,//Done
-
-		turretFrontH = 67000,
-		
-		turretSPH = 80000,//71000,//69000,
-		turretSPR = 6300,//6625,//6425//Done
-		
-		turretLBH = 45500,
-		turretLBR = 2490,//Done
-		
-		turretD2H = 47500,
-		turretD2R = 1853,
-				
-		turretD3H = 46500,
-		turretD3R = 853,
-						
-		turretD4H = 45000,
-		turretD4R = -500,
-				
-		turretD5H = 43000,
-		turretD5R = -1600,
-								
-		turretCentreOffsetL = 0,
-		turretCentreOffsetR = -520;
-    
     public static final double
+    	turretEPD = 65.42D,
+    
     	turretShootXTolerance = 5.0D, //TODO Add camera tolerance reference to RobotMap
     	turretShootYTolerance = 7.5D,
     	

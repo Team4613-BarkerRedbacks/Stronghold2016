@@ -13,6 +13,7 @@ import redbacks.arachne.lib.checks.CheckMulti;
 import redbacks.arachne.lib.checks.CheckNever;
 import redbacks.arachne.lib.checks.CheckTime;
 import redbacks.arachne.lib.checks.can.CheckCANDI;
+import redbacks.arachne.lib.checks.can.CheckCANEncoderNoAbs;
 import redbacks.arachne.lib.checks.can.CheckCANEncoderNoReset;
 import redbacks.arachne.lib.checks.digital.CheckBoolean;
 import redbacks.arachne.lib.commands.CommandHolder;
@@ -24,16 +25,15 @@ import redbacks.robot.drive.ActionShift;
 import redbacks.robot.drive.ActionSwitchControl;
 import redbacks.robot.drive.ActionSwitchControlTo;
 import redbacks.robot.intake.ActionIntakeWhileAtBase;
+import redbacks.robot.launcher.vision.ActionCDIfNotFailedVision;
 import redbacks.robot.launcher.vision.ActionTrackClear;
 import redbacks.robot.launcher.vision.ActionTrackSetup;
-import redbacks.robot.launcher.vision.ActionTrackV3;
-//import redbacks.robot.launcher.vision.ActionTrackV3WithReset;
+import redbacks.robot.launcher.vision.ActionTrackV4;
 import redbacks.robot.sensors.ActionReadSensors;
 import redbacks.robot.turret.ActionSetZeroed;
-import redbacks.robot.turret.ActionTurretCenter;
 import redbacks.robot.turret.ActionTurretFastCenter;
-import redbacks.robot.turret.ActionTurretFastCenterAuto;
 import redbacks.robot.turret.ActionTurretMoveToPos;
+import redbacks.robot.turret.ActionTurretMoveToPosWithGyro;
 import redbacks.robot.turret.ActionTurretTiltDownToSafety;
 import redbacks.robot.turret.ActionTurretTiltReset;
 import redbacks.robot.turret.ActionTurretTiltToPos;
@@ -80,9 +80,7 @@ public class CommandList
 		lightsOff = newCom(new ActionRelay(sensors.lights, false)),
 		lightsSwitch = newCom(new ActionRelay(sensors.lights)),
 		
-		trackerClear = newCom(new ActionTrackClear()),
-		shootWithCorrection = newCom(new ActionTrackV3());//,
-		//shootWithCorrectionAndReset = newCom(new ActionTrackV3WithReset());
+		trackerClear = newCom(new ActionTrackClear());
 
 	//Sensors
 	static SwitchSubsystem s_sensors = new SwitchSubsystem(sensors);
@@ -92,6 +90,13 @@ public class CommandList
 	static SwitchSubsystem s_driver = new SwitchSubsystem(driver);
 	public static CommandHolder	driverControl = newCom(new ActionDrive(new CheckNever()));
 
+	//Vision
+	static SwitchSubsystem s_vision = new SwitchSubsystem(vision);
+	public static CommandHolder
+		stopVision = newCom(new ActionDoNothing(new CheckTime(0.5D))),
+		shootWithCorrection = newCom(new ActionTrackV4());//,
+		//shootWithCorrectionAndReset = newCom(new ActionTrackV3WithReset())
+		
 	//Launcher
 	static SwitchSubsystem s_launcher = new SwitchSubsystem(launcher);
 	public static CommandHolder
@@ -177,96 +182,66 @@ public class CommandList
 	//Turret
 	static SwitchSubsystem s_turret = new SwitchSubsystem(turret);
 	public static CommandHolder
-		turretLManual = newCom(new ActionMotor.Set(turret.pan, -RobotMap.turretRotationSpeed, new CheckNever())),
-		turretRManual = newCom(new ActionMotor.Set(turret.pan, RobotMap.turretRotationSpeed, new CheckNever())),
+		turretLManual = newCom(new ActionMotor.Set(turret.pan, -RobotMap.turretRotationSpeed, new CheckCANEncoderNoAbs(0, sensors.turretPanEncoder, false))),
+		turretRManual = newCom(new ActionMotor.Set(turret.pan, RobotMap.turretRotationSpeed, new CheckCANEncoderNoAbs(18000, sensors.turretPanEncoder))),
 		
 		turretToTop = newCom(new ActionMotor.Set(turret.tilt, -RobotMap.turretTiltSpeed, new CheckCANEncoderNoReset(85000, sensors.turretTiltEncoder))),
 		turretToBase = newCom(new ActionTurretTiltReset()),
 		
-		turretCenterFromLeft = newCom(
-				new ActionSeq.Parallel(trackerClear),
-				new ActionTurretTiltReset(),
-				new ActionMotor.Set(turret.pan, RobotMap.turretCentraliseSpeed, new CheckMulti.And(
-						new CheckCANDI(sensors.turretMagLSwitch, true), 
-						new CheckCANDI(sensors.turretMagRSwitch, true)
-				)),
-				new ActionSetCANEncoder(sensors.turretPanEncoder, -RobotMap.turretCentreOffsetL),
-				new ActionSetZeroed()
-		),
-		turretCenterFastFromLeft = newCom(
-				new ActionSeq.Parallel(trackerClear),
-				new ActionTurretTiltDownToSafety(),
-				new ActionTurretFastCenter(),
-				new ActionTurretTiltReset()
-		),
-		turretCenterFromLeftAuto = newCom(
-				new ActionSeq.Parallel(trackerClear),
-				new ActionTurretTiltReset(),
-				new ActionMotor.Set(turret.pan, RobotMap.turretCentraliseSpeed, new CheckMulti.And(
-						new CheckCANDI(sensors.turretMagLSwitch, true), 
-						new CheckCANDI(sensors.turretMagRSwitch, true)
-				)),
-				new ActionSetCANEncoder(sensors.turretPanEncoder, -RobotMap.turretCentreOffsetL),
-				new ActionSetZeroed()
-		),
-		turretCenterFastFromLeftAuto = newCom(
-				new ActionSeq.Parallel(trackerClear),
-				new ActionTurretTiltDownToSafety(),
-				new ActionTurretFastCenterAuto(),
-				new ActionTurretTiltReset()
-		),
-		turretCenterFromRight = newCom(
+		turretCenterSlow = newCom(
 				new ActionSeq.Parallel(trackerClear),
 				new ActionTurretTiltReset(),
 				new ActionMotor.Set(turret.pan, -RobotMap.turretCentraliseSpeed, new CheckMulti.And(
 						new CheckCANDI(sensors.turretMagLSwitch, true), 
 						new CheckCANDI(sensors.turretMagRSwitch, true)
 				)),
-				new ActionSetCANEncoder(sensors.turretPanEncoder, -RobotMap.turretCentreOffsetR),
+				new ActionSetCANEncoder(sensors.turretPanEncoder, 0),
 				new ActionSetZeroed(),
 				new ActionTurretMoveToPos(0)
 		),
-		turretCenterFastFromRight = newCom(
+		turretCenterFast = newCom(
 				new ActionSeq.Parallel(trackerClear),
-				new ActionTurretTiltReset(),
-				new ActionMotor.Set(turret.pan, -0.6D, new CheckMulti.And(
-						new CheckCANDI(sensors.turretMagLSwitch, true), 
-						new CheckCANDI(sensors.turretMagRSwitch, true)
-				)),
-				new ActionSeq.Parallel(turretCenterFastFromLeft)
+				new ActionTurretTiltDownToSafety(),
+				new ActionTurretFastCenter(),
+				new ActionTurretTiltReset()
 		),
 		turretCenter = newCom(
-				new ActionTurretCenter(),
+				new ActionSeq.Parallel(trackerClear),//new ActionTurretCenter(),
 				new ActionTurretMoveToPos(0)
 		),
 		turretToCD = newCom(
 				new ActionTurretTiltReset(),
-				new ActionTurretCenter(),
+				new ActionSeq.Parallel(trackerClear),//new ActionTurretCenter(),
 				new ActionTurretMoveToPos(0)
+		),
+		turretToCDWithCheck = newCom(
+				new ActionCDIfNotFailedVision()
 		),
 		//CHECKME
 		turretToIntake = newCom(
-				new ActionTurretTiltToPos(RobotMap.turretIntakePos),
-				new ActionTurretCenter(),
+				new ActionTurretTiltReset(),
+				new ActionSeq.Parallel(trackerClear),//new ActionTurretCenter(),
 				new ActionTurretMoveToPos(0)
 		),
 		
-		turretToShootCorner = goToShootPos(RobotMap.turretCornerH, RobotMap.turretCornerR, NOT_BASE),
-		turretToShootEdge = goToShootPos(RobotMap.turretEdgeH - 2000, -6350, NOT_BASE),
-		turretToShootFront = goToShootPos(RobotMap.turretFrontH, 0, NOT_BASE, 72, -90, 17.2D, -232.5D),
-		turretToShootMid = goToShootPos(RobotMap.turretMidH, RobotMap.turretMidR, NOT_BASE),		
-		turretToShootSecretPassage = goToShootPos(RobotMap.turretSPH, RobotMap.turretSPR, CENTRE),
+		//FIXME Add shooter positions.
 		
-		turretToShootLowBar = goToShootPos(RobotMap.turretLBH, RobotMap.turretLBR, NOT_CENTRE, 70, -30, 12.5D, -150D),
-		turretToShootD2 = goToShootPos(RobotMap.turretD2H, RobotMap.turretD2R, NOT_CENTRE),
-		turretToShootD3 = goToShootPos(RobotMap.turretD3H, RobotMap.turretD3R, NOT_CENTRE, 65, -20, 12.5D, -150D),
-		turretToShootD4 = goToShootPos(RobotMap.turretD4H, RobotMap.turretD4R, NOT_CENTRE),
-		turretToShootD5 = goToShootPos(RobotMap.turretD5H, RobotMap.turretD5R, NOT_CENTRE),
+		turretToShootCorner = goToShootPos(51000, 16400, NOT_BASE),
+		turretToShootEdge = goToShootPos(70000, 16100, CENTRE),
+		turretToShootFront = goToShootPos(70000, 11000, CENTRE, 72, -90, 17.2D, -232.5D),
+		turretToShootMid = goToShootPos(57000, 16250, NOT_BASE),		
+		turretToShootSecretPassage = goToShootPos(85000, 6200, CENTRE),
+		
+		turretToShootLowBar = goToShootPos(60000, 13275, CENTRE), //36500, 13750 TODO Change to BASE
+		turretToShootD2 = goToShootPosYawCor(42000, 13500, CENTRE, 11, 20, 15D, -380D),
+		turretToShootD3 = goToShootPosYawCor(50000, 12100, CENTRE, 53, -5, 13.5D, -250D),
+		turretToShootD4 = goToShootPosYawCor(50000, 10700, CENTRE, 60, -25, 13D, -250D),
+		turretToShootD5 = goToShootPosYawCor(52000, 9500, CENTRE, 52, -15, 15D, -380D)/*,
 		
 		turretToShootCornerAuto3 = goToShootPos(48000, -5975, NOT_BASE),//TEST
 		turretToShootEdgeAuto10 = goToShootPos(RobotMap.turretEdgeH - 1000, RobotMap.turretEdgeR - 50, NOT_BASE),
 		turretToShootD2Back = goToShootPos(35000, -8800, CENTRE, 50, 40, 12.5D, -150D),
-		turretToShootD3Back = goToShootPos(45000, 1500, TOP, 65, -20, 12.5D, -160D);//40000, -9600, CENTRE, 65, -20, 12.5D, -250D);
+		turretToShootD3Back = goToShootPos(45000, 1500, TOP, 65, -20, 12.5D, -160D);//40000, -9600, CENTRE, 65, -20, 12.5D, -250D)*/;
 	
 	//Sequences
 	static SwitchSubsystem s_sequencer = new SwitchSubsystem(sequencer);
@@ -361,6 +336,18 @@ public class CommandList
 				new ActionMulti(
 						new ActionTurretTiltToSafety(height, rotation),
 						new ActionTurretMoveToPos(rotation)
+				),
+				new ActionTurretTiltToPos(height),
+				new ActionTrackSetup(visionX, visionY, mulX, mulY));
+	}
+	
+	public static CommandHolder goToShootPosYawCor(int height, int rotation, ArmPosition armPosition, int visionX, int visionY, double mulX, double mulY) {
+		return newCom(
+				armPosition.action,
+				new ActionTurretTiltDownToSafety(),
+				new ActionMulti(
+						new ActionTurretTiltToSafety(height, rotation),
+						new ActionTurretMoveToPosWithGyro(rotation)
 				),
 				new ActionTurretTiltToPos(height),
 				new ActionTrackSetup(visionX, visionY, mulX, mulY));

@@ -51,7 +51,7 @@ public class Autonomous
 		autonomous[0] = doNothing.c();
 		
 		//Spy bot		1 goal
-		autonomous[1] = createAuto(NOT_CENTRE,
+		/*FIXME autonomous[1] = createAuto(NOT_CENTRE,
 				new ActionMotor.RampTime(launcher.shooter, 1D, 0.5D, true),
 				new ActionWait(1D),
 				new ActionSeq.Parallel(launcherShoot)
@@ -507,7 +507,7 @@ public class Autonomous
 						new ActionMotor.RampTime(driver.right, 0, 0.3D, true)
 				),
 				new ActionDriveStraightReverse(new CheckCANEncoderNoReset(5500, sensors.driveLEncoder, false), 0.6D)*/
-		);
+/*FIXME		);
 		
 		autonomous[61] = createAuto(CENTRE,
 				new ActionResetYaw(),
@@ -535,7 +535,7 @@ public class Autonomous
 //				new ActionResetCANEncoder(sensors.driveLEncoder),
 //				new ActionResetCANEncoder(sensors.driveREncoder),
 //				new ActionDrivePIDToPos(100)
-//		);
+//		);FIXME */
 	}
 	
 	public static CommandRB createAuto(ArmPosition armPos, Action... actions) {
@@ -547,7 +547,7 @@ public class Autonomous
 		return new CommandHolder(null, sequence).c();
 	}
 	
-	public static CommandRB createDAuto(int autoCrossDis, int turningAng) {
+	/*public static CommandRB createDAuto(int autoCrossDis, int turningAng) {
 		boolean dir = turningAng > 0;
 		final double turnSpeed = 0.5D;
 		return createAuto(TOP,
@@ -570,5 +570,5 @@ public class Autonomous
 				
 				new ActionSeq.Parallel(shootWithCorrection)
 		);
-	}
+	}*/
 }

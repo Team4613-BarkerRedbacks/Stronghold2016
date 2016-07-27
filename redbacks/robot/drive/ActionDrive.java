@@ -27,8 +27,8 @@ public class ActionDrive extends Action
 	public void runAction(CommandRB command) {
 		if(!Main.isAuto) 
 			//CommandBase.driver.drivetrain.tankDrive(OI.axis_l_Y.get(), OI.axis_r_Y.get());
-			//arcadeDrive(-OI.axis_d_RY.get() * 0.95D, OI.axis_d_LX.get());
-			arcadeDrive(-OI.axis_r_Y.get(), OI.axis_l_X.get());
+			arcadeDrive(-OI.axis_d_RY.get() * 0.95D, OI.axis_d_LX.get());
+			//arcadeDrive(-OI.axis_r_Y.get(), OI.axis_l_X.get());
 		else if(CommandBase.driver.isAutoController) tankDrive(-CommandBase.driver.left.get(), -CommandBase.driver.right.get());
 	}
 	

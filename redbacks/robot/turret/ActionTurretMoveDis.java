@@ -37,9 +37,9 @@ public class ActionTurretMoveDis extends Action
 		
 		double speed = 
 			Math.abs(enc - encPos) < 200 ? 
-					(Math.abs(enc) > 8000 ? RobotMap.turretCentraliseSpeed : RobotMap.turretPrecisionSpeed) * 
+					RobotMap.turretPrecisionSpeed * 
 					Math.min(Math.max(1, command.timeSinceInitialized() - startTime), 3): 
-			Math.abs(enc - encPos) < 500 ? RobotMap.turretCentraliseSpeed : 
+			Math.abs(enc - encPos) < 600 ? RobotMap.turretCentraliseSpeed : 
 			RobotMap.turretRotationSpeed;
 		
 		CommandBase.turret.pan.set(enc > encPos ? -speed : speed, command);

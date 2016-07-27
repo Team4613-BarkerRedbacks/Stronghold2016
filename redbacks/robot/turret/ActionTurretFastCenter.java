@@ -23,8 +23,8 @@ public class ActionTurretFastCenter extends Action
 								new CheckCANDI(sensors.turretMagLSwitch, true), 
 								new CheckCANDI(sensors.turretMagRSwitch, true)
 						),
-						new CheckCANEncoder(7000, sensors.turretPanEncoder),
-						new CheckTime(3)
+						new CheckCANEncoder(18000, sensors.turretPanEncoder),
+						new CheckTime(5)
 				)
 		);
 	}
@@ -34,21 +34,21 @@ public class ActionTurretFastCenter extends Action
 	}
 	
 	public void runAction(CommandRB command) {
-		turret.pan.set(0.6D, command);
+		turret.pan.set(-0.6D, command);
 		if(!sensors.turretBaseSwitch.get()) turret.tilt.set(RobotMap.turretTiltSpeed / 3, command);
 		else turret.tilt.disable();
 	}
 	
 	public void onFinish(CommandRB command) {
 		turret.pan.disable();
-		if(Math.abs(sensors.turretPanEncoder.get()) < 6900 && command.timeSinceInitialized() - startTime < 3) 
+		if(command.timeSinceInitialized() - startTime < 3) 
 			new CommandHolder(turret, 
-					new ActionMotor.Set(turret.pan, -RobotMap.turretCentraliseSpeed, new CheckMulti.And(
+					new ActionMotor.Set(turret.pan, RobotMap.turretCentraliseSpeed, new CheckMulti.And(
 							new CheckCANDI(sensors.turretMagLSwitch, false), 
 							new CheckCANDI(sensors.turretMagRSwitch, false)
 					)),
-					new ActionMotor.Set(turret.pan, -RobotMap.turretCentraliseSpeed, new CheckCANEncoder(500, sensors.turretPanEncoder)),
-					new ActionSeq.Parallel(CommandList.turretCenterFromLeft)
+					new ActionMotor.Set(turret.pan, RobotMap.turretCentraliseSpeed, new CheckCANEncoder(500, sensors.turretPanEncoder)),
+					new ActionSeq.Parallel(CommandList.turretCenterSlow)
 			).c().start();
 	}
 }

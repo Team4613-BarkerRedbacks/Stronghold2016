@@ -1,6 +1,5 @@
 package redbacks.robot.subsystems;
 
-import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Relay.Direction;
 import redbacks.arachne.core.references.RobotMap;
@@ -29,7 +28,7 @@ public class SubsystemSensors extends SubsystemRB
 	public CANDigitalInput turretBaseSwitch = new CANDigitalInput(launcher.shooterR, true);
 	public CANEncoder turretPanEncoder = new CANEncoder(turret.pan);
 	public CANEncoder turretTiltEncoder = new CANEncoder(turret.tilt);
-	public CANAnalog turretPot = new CANAnalog(new CANTalon(8));
+	public CANAnalog turretPot = new CANAnalog(intake.intakeRear);//new CANTalon(8));
 	
 	public Relay lights = new Relay(RobotMap.lightsRelayID, Direction.kForward);
 	

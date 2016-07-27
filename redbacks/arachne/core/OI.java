@@ -42,32 +42,31 @@ public class OI
 		
 		//whenPressed(d_B, sequenceShootFromStop.c());
 		whenPressed(d_B, shootWithCorrection.c());
-		whenReleased(d_B, launcherSlow.c(), turretToCD.c());
+		whenReleased(d_B, launcherSlow.c(), turretToCDWithCheck.c(), stopVision.c());
 		
 		whenPressed(d_LT, shootWithCorrection.c());
-		whenReleased(d_LT, launcherSlow.c(), turretToCD.c());
+		whenReleased(d_LT, launcherSlow.c(), turretToCDWithCheck.c(), stopVision.c());
 		
 		whenHeld(d_A, launcherShootSlow.c());
 
 		whenPressed(d_LB, sequenceLowConfig.c());
 		whenPressed(d_RB, sequenceCrossingConfig.c());
 		whenPressed(d_RT, armToMax.c());
-
-		whenPressed(d_Back, turretToShootD3Back.c());
-		whenPressed(d_Start, turretCenterFastFromRight.c());
 		
+		whenPressed(d_Start, resetYaw.c());
+
 		//Operator
-		whenPressed(o_ShootTL1, turretToShootCorner.c()); 
+		whenPressed(o_ShootTL1, turretToShootCorner.c());
 		whenPressed(o_ShootTL2, turretToShootMid.c());
 		whenPressed(o_ShootTL3, turretToShootEdge.c());
 		whenPressed(o_ShootTF, turretToShootFront.c());
 		whenPressed(o_ShootTR, turretToShootSecretPassage.c());
 		
 		whenPressed(o_ShootD1, turretToShootLowBar.c()); //TODO
-		whenPressed(o_ShootD2, turretToShootD2.c()); //TODO
-		whenPressed(o_ShootD3, turretToShootD3.c()); //TODO
-		whenPressed(o_ShootD4, turretToShootD4.c()); //TODO
-		whenPressed(o_ShootD5, turretToShootD5.c()); //TODO
+		whenPressed(o_ShootD2, turretToShootD2.c());
+		whenPressed(o_ShootD3, turretToShootD3.c());
+		whenPressed(o_ShootD4, turretToShootD4.c());
+		whenPressed(o_ShootD5, turretToShootD5.c());
 		
 		whenPressed(o_LauncherFix, launcherFixCatch.c());
 		
@@ -76,7 +75,7 @@ public class OI
 		whenHeld(o_LauncherIn, intakeIntakeBall.c());
 		whenHeld(o_LauncherInFast, intakeIntakeBallFast.c());
 
-		whenPressed(o_TurretZero, turretCenterFastFromLeft.c());
+		whenPressed(o_TurretZero, turretCenterFast.c());
 		whenPressed(o_TurretCenter, turretToCD.c());
 
 		whenHeld(o_TurretUp, turretToTop.c());

@@ -34,6 +34,7 @@ public abstract class CommandBase extends Command
 	public static SubsystemTurret turret = new SubsystemTurret();
 	public static SubsystemArm arm = new SubsystemArm();
 	public static SubsystemRB sequencer = new SubsystemRB();
+	public static SubsystemRB vision = new SubsystemRB();
 	
 	/** Sensor subsystem. **/
 	public static SubsystemSensors sensors = new SubsystemSensors();
