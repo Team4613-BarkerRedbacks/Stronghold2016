@@ -19,7 +19,7 @@ public class ActionArmToBase extends Action
 		if(!CommandBase.arm.arm.get()) new CommandHolder(CommandBase.arm, 
 				new ActionSolenoid.Single(arm.arm, true),
 				new ActionSolenoid.Single(arm.armSt1, true),
-				new ActionWait(2D),
+				new ActionWait(2.5D), //FIXME
 				new ActionSolenoid.Single(arm.armSt1, false)).c().start();
 		else new CommandHolder(CommandBase.arm,
 				new ActionSolenoid.Single(arm.armSt1, false)).c().start();
