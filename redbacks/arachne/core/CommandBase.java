@@ -46,7 +46,7 @@ public abstract class CommandBase extends Command
 	public static void init() {
 		driver.setDefCommand(CommandList.driverControl.c());
 		sensors.setDefCommand(CommandList.sensorsRead.c());
-		intake.setDefCommand(CommandList.intakeWhileAtBase.c());
+		//intake.setDefCommand(CommandList.intakeWhileAtBase.c());
 		
 		//Don't move or change this. EVER. Without it, no operator interface, no mapping, therefore "robot no move."
 		oi = new OI();

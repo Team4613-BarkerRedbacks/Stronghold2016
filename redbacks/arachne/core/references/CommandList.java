@@ -214,52 +214,50 @@ public class CommandList
 				new ActionSeq.Parallel(trackerClear),//new ActionTurretCenter(),
 				new ActionTurretMoveToPos(0)
 		),
+		turretToInverse = newCom(
+				new ActionTurretTiltReset(),
+				new ActionSeq.Parallel(trackerClear),//new ActionTurretCenter(),
+				new ActionTurretMoveToPos(10800)
+		),
 		turretToCDWithCheck = newCom(
 				new ActionCDIfNotFailedVision()
 		),
-		//CHECKME
 		turretToIntake = newCom(
 				new ActionTurretTiltReset(),
 				new ActionSeq.Parallel(trackerClear),//new ActionTurretCenter(),
 				new ActionTurretMoveToPos(0)
 		),
 		
-		//FIXME Add shooter positions.
-		
 		turretToShootCorner = goToShootPos(51000, 16400, NOT_BASE),
 		turretToShootEdge = goToShootPos(70000, 16100, CENTRE),
 		turretToShootFront = goToShootPos(70000, 11000, CENTRE, 72, -90, 17.2D, -232.5D),
-		turretToShootMid = goToShootPos(57000, 16250, NOT_BASE),		
+		turretToShootMid = goToShootPos(57000, 16250, NOT_BASE),
 		turretToShootSecretPassage = goToShootPos(85000, 6200, CENTRE),
 		
 		turretToShootLowBar = goToShootPos(60000, 13275, CENTRE), //36500, 13750 TODO Change to BASE
 		turretToShootD2 = goToShootPosYawCor(42000, 13500, CENTRE, 11, 20, 15D, -380D),
 		turretToShootD3 = goToShootPosYawCor(50000, 12100, CENTRE, 53, -5, 13.5D, -250D),
-		turretToShootD4 = goToShootPosYawCor(50000, 10700, CENTRE, 60, -25, 13D, -250D),
-		turretToShootD5 = goToShootPosYawCor(52000, 9500, CENTRE, 52, -15, 15D, -380D)/*,
-		
-		turretToShootCornerAuto3 = goToShootPos(48000, -5975, NOT_BASE),//TEST
-		turretToShootEdgeAuto10 = goToShootPos(RobotMap.turretEdgeH - 1000, RobotMap.turretEdgeR - 50, NOT_BASE),
-		turretToShootD2Back = goToShootPos(35000, -8800, CENTRE, 50, 40, 12.5D, -150D),
-		turretToShootD3Back = goToShootPos(45000, 1500, TOP, 65, -20, 12.5D, -160D);//40000, -9600, CENTRE, 65, -20, 12.5D, -250D)*/;
+		turretToShootD4 = goToShootPosYawCor(50000, 10900, CENTRE, 60, -25, 13D, -250D),
+		turretToShootD5 = goToShootPosYawCor(52000, 9500, CENTRE, 52, -15, 15D, -380D);
 	
 	//Sequences
 	static SwitchSubsystem s_sequencer = new SwitchSubsystem(sequencer);
 	public static CommandHolder
 		sequenceCrossingConfig = newCom(
-				new ActionSeq.Parallel(turretToCD),
+				new ActionSeq.Parallel(turretToInverse),
 				new ActionSeq.Parallel(armToIntake)
 		),
 		sequenceLowConfig = newCom(
 				new ActionSeq.Parallel(turretToCD),
 				new ActionSeq.Parallel(armToBase)
 		),
-		sequenceIntakeGround = newCom(
+		sequenceIntake = newCom(
 				new ActionSeq.Parallel(armToBase),
 				new ActionSeq.Parallel(intakeIntakeBall),
-				new ActionSeq.Parallel(turretToIntake)
+				new ActionSeq.Parallel(turretToCD),
+				new ActionSeq.Parallel(launcherIntake)
 		),
-		sequenceIntakeToShooter = newCom(
+		/*sequenceIntakeToShooter = newCom(
 				new ActionSeq.Parallel(intake, new ActionMotor.Set(intake.intake, -0.5D, new CheckTime(0.1D)), new ActionMotor.Disable(intake.intake)),//new ActionWait(0.5D)),
 				new ActionSeq.Parallel(armToIntake),
 				new ActionSeq.Parallel(launcherIntakeFast),
@@ -277,11 +275,11 @@ public class CommandList
 				new ActionWait(1.5D),
 				new ActionSeq.Parallel(intakeIntakeBallFast),
 				new ActionDoNothing()
-		),
+		),*/
 		sequenceStopBallHandling = newCom(
-				new ActionSeq.Parallel(turret, new ActionWait(0.5D)),
-				new ActionSeq.Parallel(launcher, new ActionWait(0.5D)),
-				new ActionSeq.Parallel(intake, new ActionWait(0.5D))
+				new ActionSeq.Parallel(turret, new ActionWait(0.1D)),
+				new ActionSeq.Parallel(launcher, new ActionWait(0.1D)),
+				new ActionSeq.Parallel(intake, new ActionWait(0.1D))
 		),
 		sequenceShootFromStop = newCom(
 				new ActionSeq.Parallel(launcherSpeedWheels),

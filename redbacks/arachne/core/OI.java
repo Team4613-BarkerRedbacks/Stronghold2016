@@ -49,11 +49,13 @@ public class OI
 		
 		whenHeld(d_A, launcherShootSlow.c());
 
-		whenPressed(d_LB, sequenceLowConfig.c());
-		whenPressed(d_RB, sequenceCrossingConfig.c());
+		whenPressed(d_LB, armToBase.c());
+		whenPressed(d_RB, armToIntake.c());
 		whenPressed(d_RT, armToMax.c());
 		
 		whenPressed(d_Start, resetYaw.c());
+		whenHeld(d_Back, sequenceIntake.c());
+		whenReleased(d_Back, sequenceStopBallHandling.c());
 
 		//Operator
 		whenPressed(o_ShootTL1, turretToShootCorner.c());
@@ -83,16 +85,18 @@ public class OI
 		whenHeld(o_TurretLeft, turretLManual.c());
 		whenHeld(o_TurretRight, turretRManual.c());
 
-		whenHeld(o_IntakeToShooter, sequenceIntakeToShooterHeld.c());
-		whenReleased(o_IntakeToShooter, sequenceStopBallHandling.c());
+		//whenHeld(o_IntakeToShooter, sequenceIntakeToShooterHeld.c());
+		//whenReleased(o_IntakeToShooter, sequenceStopBallHandling.c());
 		
-		whenPressed(o_IntakeFromGround, sequenceIntakeGround.c());
+		whenPressed(o_IntakeToShooter, turretToInverse.c());
+		whenHeld(o_IntakeFromGround, sequenceIntake.c());
+		whenReleased(o_IntakeFromGround, sequenceStopBallHandling.c());
 
 		whenHeld(o_IntakeDirection, intakeSpitBall.c());
 
 		whenPressed(o_ArmTop, armToMax.c());
 		whenPressed(o_ArmMid, armToIntake.c());
-		whenPressed(o_ArmBase, sequenceLowConfig.c());
+		whenPressed(o_ArmBase, armToBase.c());
 		
 		//Sensors
 		pulseWhileHeld(new CANDITrigger(new CheckCANDI(sensors.turretBaseSwitch, true)), resetTiltEncoder.c());
