@@ -1,14 +1,12 @@
 package redbacks.arachne.lib.navx;
 
-import com.kauailabs.navx.frc.AHRS;
-
 import edu.wpi.first.wpilibj.SPI;
 
 //JAVADOC
 
 public class NavX
 {
-	public static AHRS navx = new AHRS(SPI.Port.kMXP);
+	public static BetterAHRS navx = new BetterAHRS(SPI.Port.kMXP);
 	
 	//Rotation functions
 	public static double getPitch() {
@@ -67,5 +65,10 @@ public class NavX
 	
 	public static void reset() {
 		navx.reset();
+		navx.setYawOffset(0);
+	}
+	
+	public static void setYaw(float offset) {
+		navx.setYawOffset(offset);
 	}
 }

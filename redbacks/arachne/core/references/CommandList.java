@@ -18,6 +18,7 @@ import redbacks.arachne.lib.checks.can.CheckCANEncoderNoReset;
 import redbacks.arachne.lib.checks.digital.CheckBoolean;
 import redbacks.arachne.lib.commands.CommandHolder;
 import redbacks.arachne.lib.navx.ActionResetYaw;
+import redbacks.arachne.lib.navx.ActionSetYaw;
 import redbacks.arachne.lib.subsystems.SubsystemRB;
 import redbacks.robot.arm.ArmPosition;
 import redbacks.robot.drive.ActionDrive;
@@ -54,6 +55,7 @@ public class CommandList
 	public static CommandHolder
 		doNothing = newCom(new ActionDoNothing()),
 		resetYaw = newCom(new ActionResetYaw()),
+		invertYaw = newCom(new ActionSetYaw(180)),
 		resetDriveEncoders = newCom(
 				new ActionResetCANEncoder(sensors.driveLEncoder), 
 				new ActionResetCANEncoder(sensors.driveREncoder)
