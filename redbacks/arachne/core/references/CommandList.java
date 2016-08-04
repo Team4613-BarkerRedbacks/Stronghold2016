@@ -238,9 +238,9 @@ public class CommandList
 		
 		turretToShootLowBar = goToShootPos(60000, 13275, CENTRE), //36500, 13750 TODO Change to BASE
 		turretToShootD2 = goToShootPos(42000, 13500, CENTRE, 11, 20, 15D, -380D),
-		turretToShootD3 = goToShootPos(50000, 12100, CENTRE, 53, -5, 13.5D, -250D),
+		turretToShootD3 = goToShootPos(50000, 12400, CENTRE, 53, -5, 13.5D, -250D),
 		turretToShootD4 = goToShootPos(50000, 10900, CENTRE, 60, -25, 13D, -250D),
-		turretToShootD5 = goToShootPos(52000, 9500, CENTRE, 52, -15, 15D, -380D);
+		turretToShootD5 = goToShootPos(52000, 10200, CENTRE, 48, -15, 15D, -380D);
 	
 	//Sequences
 	static SwitchSubsystem s_sequencer = new SwitchSubsystem(sequencer);

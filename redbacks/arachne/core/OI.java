@@ -88,7 +88,9 @@ public class OI
 		//whenHeld(o_IntakeToShooter, sequenceIntakeToShooterHeld.c());
 		//whenReleased(o_IntakeToShooter, sequenceStopBallHandling.c());
 		
-		whenPressed(o_IntakeToShooter, turretToInverse.c());
+		//whenPressed(o_IntakeToShooter, turretToInverse.c());
+		whenHeld(o_IntakeToShooter, sequenceIntake.c());
+		whenReleased(o_IntakeToShooter, sequenceStopBallHandling.c());
 		whenHeld(o_IntakeFromGround, sequenceIntake.c());
 		whenReleased(o_IntakeFromGround, sequenceStopBallHandling.c());
 
