@@ -1,0 +1,37 @@
+
+		
+		//D / Moat 2 ball - pos 4
+		/*autonomous[14] = createAuto(CENTRE,
+				new ActionResetYaw(),
+				new ActionSeq.Parallel(turretCenterFast),
+				new ActionResetCANEncoder(sensors.driveLEncoder),
+				new ActionResetCANEncoder(sensors.driveREncoder),
+				new ActionSeq.Parallel(launcherHold),
+				new ActionMulti(
+						new ActionMotor.RampTime(driver.left, -1, 0.5D, true),
+						new ActionMotor.RampTime(driver.right, -1, 0.5D, true)
+				),
+				new ActionDriveStraight(new CheckCANEncoderNoReset(6600, sensors.driveLEncoder), -1D),
+				new ActionResetCANEncoder(sensors.driveLEncoder),
+				new ActionResetCANEncoder(sensors.driveREncoder),
+				new ActionMulti(
+						new ActionMotor.RampTime(driver.left, 0, 0.3D, true),
+						new ActionMotor.RampTime(driver.right, 0, 0.3D, true)
+				),
+				new ActionMulti(
+					new ActionDriveStraight(new CheckMulti.Or(new CheckCANEncoderNoReset(200, sensors.driveLEncoder, false), new CheckTime(4)), 0.5D),
+					new ActionSeq.Parallel(turretToShootD4),
+					new ActionDoNothing(new CheckCANEncoderNoReset(45000, sensors.turretTiltEncoder))
+				),
+				new ActionTrackSetup(65, -60, 12.5D, -150D),
+				new ActionWait(1D),
+				new ActionSeq.Parallel(shootWithCorrection),
+				new ActionDoNothing(new CheckMotor(0.75D, launcher.polycord)),
+				new ActionWait(0.5D),
+				new ActionDriveStraight(new CheckCANEncoder(3500, sensors.driveLEncoder), 1D),
+				new ActionMulti(
+						new ActionMotor.RampTime(driver.left, 0, 0.3D, true),
+						new ActionMotor.RampTime(driver.right, 0, 0.3D, true)
+				),
+				new ActionTankDrive(new CheckTime(0.2D), -0.2D, -0.2D)
+		);*/

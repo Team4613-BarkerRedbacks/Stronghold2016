@@ -40,13 +40,14 @@ public class RobotMap {
     public static final double
     	turretEPD = 65.42D,
     
-    	turretShootXTolerance = 5.0D, //TODO Add camera tolerance reference to RobotMap
-    	turretShootYTolerance = 7.5D,
+    	//turretShootXTolerance = 5.0D, //TODO Add camera tolerance reference to RobotMap
+    	//turretShootYTolerance = 7.5D,
     	
+    	//XXX Turret movement speeds. If it needs some more power, increase these. The slower speeds are used when it's closer to its destination.
     	turretTiltSpeed = 1D,
     	turretTiltSlowSpeed = 0.15D,
     	    	
     	turretRotationSpeed = 1.0D,
     	turretCentraliseSpeed = 0.2D,
-    	turretPrecisionSpeed = 0.075D;//0.125D; //WAS 0.1D
+    	turretPrecisionSpeed = 0.075D;
 }

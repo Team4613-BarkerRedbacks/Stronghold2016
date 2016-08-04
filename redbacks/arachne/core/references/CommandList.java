@@ -1,44 +1,18 @@
 package redbacks.arachne.core.references;
 
-import redbacks.arachne.lib.actions.Action;
-import redbacks.arachne.lib.actions.ActionDoNothing;
-import redbacks.arachne.lib.actions.ActionMotor;
-import redbacks.arachne.lib.actions.ActionMulti;
-import redbacks.arachne.lib.actions.ActionRelay;
-import redbacks.arachne.lib.actions.ActionResetCANEncoder;
-import redbacks.arachne.lib.actions.ActionSeq;
-import redbacks.arachne.lib.actions.ActionSetCANEncoder;
-import redbacks.arachne.lib.actions.ActionWait;
-import redbacks.arachne.lib.checks.CheckMulti;
-import redbacks.arachne.lib.checks.CheckNever;
-import redbacks.arachne.lib.checks.CheckTime;
-import redbacks.arachne.lib.checks.can.CheckCANDI;
-import redbacks.arachne.lib.checks.can.CheckCANEncoderNoAbs;
-import redbacks.arachne.lib.checks.can.CheckCANEncoderNoReset;
+import redbacks.arachne.lib.actions.*;
+import redbacks.arachne.lib.checks.*;
+import redbacks.arachne.lib.checks.can.*;
 import redbacks.arachne.lib.checks.digital.CheckBoolean;
 import redbacks.arachne.lib.commands.CommandHolder;
-import redbacks.arachne.lib.navx.ActionResetYaw;
-import redbacks.arachne.lib.navx.ActionSetYaw;
+import redbacks.arachne.lib.navx.*;
 import redbacks.arachne.lib.subsystems.SubsystemRB;
 import redbacks.robot.arm.ArmPosition;
-import redbacks.robot.drive.ActionDrive;
-import redbacks.robot.drive.ActionShift;
-import redbacks.robot.drive.ActionSwitchControl;
-import redbacks.robot.drive.ActionSwitchControlTo;
+import redbacks.robot.drive.*;
 import redbacks.robot.intake.ActionIntakeWhileAtBase;
-import redbacks.robot.launcher.vision.ActionCDIfNotFailedVision;
-import redbacks.robot.launcher.vision.ActionTrackClear;
-import redbacks.robot.launcher.vision.ActionTrackSetup;
-import redbacks.robot.launcher.vision.ActionTrackV4;
+import redbacks.robot.launcher.vision.*;
 import redbacks.robot.sensors.ActionReadSensors;
-import redbacks.robot.turret.ActionSetZeroed;
-import redbacks.robot.turret.ActionTurretFastCenter;
-import redbacks.robot.turret.ActionTurretMoveToPos;
-import redbacks.robot.turret.ActionTurretMoveToPosWithGyro;
-import redbacks.robot.turret.ActionTurretTiltDownToSafety;
-import redbacks.robot.turret.ActionTurretTiltReset;
-import redbacks.robot.turret.ActionTurretTiltToPos;
-import redbacks.robot.turret.ActionTurretTiltToSafety;
+import redbacks.robot.turret.*;
 import static redbacks.arachne.core.CommandBase.*;
 import static redbacks.robot.arm.ArmPosition.*;
 
@@ -96,8 +70,7 @@ public class CommandList
 	static SwitchSubsystem s_vision = new SwitchSubsystem(vision);
 	public static CommandHolder
 		stopVision = newCom(new ActionDoNothing(new CheckTime(0.5D))),
-		shootWithCorrection = newCom(new ActionTrackV4());//,
-		//shootWithCorrectionAndReset = newCom(new ActionTrackV3WithReset())
+		shootWithCorrection = newCom(new ActionTrackV4());
 		
 	//Launcher
 	static SwitchSubsystem s_launcher = new SwitchSubsystem(launcher);
@@ -230,14 +203,16 @@ public class CommandList
 				new ActionTurretMoveToPos(0)
 		),
 		
+		//XXX These are the shooting positions.
+		//Format is tilt, pan, arm position, then optionally, correct camera x, y, compensation multiplier x, y.
 		turretToShootCorner = goToShootPos(51000, 16400, NOT_BASE),
 		turretToShootEdge = goToShootPos(70000, 16100, CENTRE),
 		turretToShootFront = goToShootPos(70000, 11000, CENTRE, 72, -90, 17.2D, -232.5D),
 		turretToShootMid = goToShootPos(57000, 16250, NOT_BASE),
 		turretToShootSecretPassage = goToShootPos(85000, 6200, CENTRE),
 		
-		turretToShootLowBar = goToShootPos(60000, 13275, CENTRE), //36500, 13750 TODO Change to BASE
-		turretToShootD2 = goToShootPos(42000, 13500, CENTRE, 11, 20, 15D, -380D),
+		turretToShootLowBar = goToShootPos(60000, 13275, CENTRE),//Don't use.
+		turretToShootD2 = goToShootPos(42000, 13500, CENTRE, 11, 20, 15D, -380D),//Don't use.
 		turretToShootD3 = goToShootPos(50000, 12400, CENTRE, 53, -5, 13.5D, -250D),
 		turretToShootD4 = goToShootPos(50000, 10900, CENTRE, 60, -25, 13D, -250D),
 		turretToShootD5 = goToShootPos(52000, 10200, CENTRE, 48, -15, 15D, -380D);

@@ -64,7 +64,7 @@ public class OI
 		whenPressed(o_ShootTF, turretToShootFront.c());
 		whenPressed(o_ShootTR, turretToShootSecretPassage.c());
 		
-		whenPressed(o_ShootD1, turretToShootLowBar.c()); //TODO
+		whenPressed(o_ShootD1, turretToShootLowBar.c());
 		whenPressed(o_ShootD2, turretToShootD2.c());
 		whenPressed(o_ShootD3, turretToShootD3.c());
 		whenPressed(o_ShootD4, turretToShootD4.c());
